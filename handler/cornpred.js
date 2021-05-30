@@ -76,7 +76,7 @@ const predictCornHandler = async (req, res) => {
         // load model
         if (!modelfile) modelfile = await tf.loadLayersModel('file://' + path.join(__dirname, '..', 'models', 'corn-h5', 'model.json'));
         const {model, img} = req.body;
-
+        console.log(img, model);
         // error thrower
         if (!img) throw Error('harus menampilkan url gambar!');
         if (!model) throw Error('harus menambahkan nama gambar');
@@ -84,7 +84,7 @@ const predictCornHandler = async (req, res) => {
         console.log('finished!');
         // const clientimg = await getImage(path.join(__dirname, '..', 'testing-image', 'testing.jpg'));
         // fetch from random url
-        const clientimg = await getImage(img);
+        const clientimg = await getImage(path.join(__dirname, '..', 'testing-image', img));
 
         console.log(clientimg);
         // predict image
@@ -102,7 +102,7 @@ const predictCornHandler = async (req, res) => {
         });
     } catch (e) {
         console.log(e);
-        return res.status(500).json({
+        return res.status(400).json({
             status: 'fail',
             message: e.message,
         });
