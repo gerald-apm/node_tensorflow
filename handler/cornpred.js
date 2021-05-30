@@ -73,7 +73,7 @@ const predictCornHandler = async (req, res) => {
         if (!model) model = await tf.loadLayersModel('file://' + path.join(__dirname, '..', 'models', 'corn-h5', 'model.json'));
         const {model: modelName, img} = req.body;
         console.log('finished!');
-        const clientimg = await getImage('file://' + path.join(__dirname, '..', 'testing-image', 'testing.jpg'));
+        const clientimg = await getImage(path.join(__dirname, '..', 'testing-image', 'testing.jpg'));
         console.log(clientimg);
         // predict image
         const predictions = await model.predict(img_tensor).dataSync();
