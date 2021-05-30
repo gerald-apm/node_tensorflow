@@ -22,7 +22,7 @@ const getCornHandler = async (req, res) => {
 
 const loadLocalImage = async (filename) => {
     try {
-        const image = await Jimp.read(IMAGE_FILE_PATH);
+        const image = await Jimp.read(filename);
         image.cover(224, 224, Jimp.HORIZONTAL_ALIGN_CENTER | Jimp.VERTICAL_ALIGN_MIDDLE);
 
         const NUM_OF_CHANNELS = 3;
