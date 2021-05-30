@@ -76,7 +76,7 @@ const predictCornHandler = async (req, res) => {
         const clientimg = await getImage(path.join(__dirname, '..', 'testing-image', 'testing.jpg'));
         console.log(clientimg);
         // predict image
-        const predictions = await model.predict(img_tensor).dataSync();
+        const predictions = await model.predict(clientimg).dataSync();
         for (let i = 0; i < predictions.length; i++) {
             const label = labels[i];
             const probability = predictions[i];
