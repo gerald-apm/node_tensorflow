@@ -1,10 +1,15 @@
+/* eslint-disable max-len */
 /* eslint-disable require-jsdoc */
 /* eslint-disable no-unused-vars */
 // Imports the Google Cloud client library.
 const {Storage} = require('@google-cloud/storage');
 const tf = require('@tensorflow/tfjs');
+
 const path = require('path');
-const cwd = path.join(__dirname, '../models/corn-h5/');
+const {Image, createCanvas} = require('canvas');
+const canvas = createCanvas(800, 600);
+const ctx = canvas.getContext('2d');
+let model = null;
 
 const storage = new Storage();
 
@@ -18,8 +23,41 @@ const getCornHandler = async (req, res) => {
     }
 };
 
-const predictCornHandler = async (req, res) => {
+const loadLocalImage = async (filename) => {
+    try {
+        const img = new Image();
+        img.onload = () => ctx.drawImage(img, 0, 0);
+        img.onerror = (err) => {
+            throw err;
+        };
+        img.src = filename;
+        image = tf.fromPixels(canvas);
+        return image;
+    } catch (err) {
+        console.log(err);
+    }
+};
 
+const getImage = async (filename) => {
+    try {
+        this.image = await loadLocalImage(filename);
+    } catch (error) {
+        console.log('error loading image', error);
+    }
+    return this.image;
+};
+
+const predictCornHandler = async (req, res) => {
+    try {
+        // load model
+        if (!model) model = await tf.loadLayersModel('file:///home/gerald/Documents/vscode/Nodejs-server/node_tensorflow/models/corn-h5/model.json');
+        const {model: modelName, img} = req.body;
+        // const clientimg = await getImage(path.join(__dirname, '..', 'testing-img', 'testing.jpg'));
+        // console.log(clientimg);
+    } catch (e) {
+        console.log(e);
+        return res.status(500).send('error');
+    }
 };
 
 const downloadModel = async (
