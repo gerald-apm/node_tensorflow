@@ -18,7 +18,7 @@ const labels = [
 ];
 
 const argMax = (array) => {
-    return array.map((x, i) => [x, i]).reduce((r, a) => (a[0] > r[0] ? a : r))[1];
+    return [].reduce.call(array, (m, c, i, arr) => c > arr[m] ? i : m, 0);
 };
 
 const getCornHandler = async (req, res) => {
