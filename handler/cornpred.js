@@ -4,7 +4,7 @@
 const tf = require('@tensorflow/tfjs-node');
 const path = require('path');
 const {getImage} = require('../utils/loadImage');
-const {downloadModel} = require('../utils/dowloadModels');
+const {downloadModel} = require('../utils/downloadModels');
 let modelfile = null;
 
 const labels = [
