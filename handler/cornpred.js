@@ -10,6 +10,13 @@ const Jimp = require('jimp');
 let model = null;
 const storage = new Storage();
 
+const labels = [
+    'healthy',
+    'common rust',
+    'northern leaf blight',
+    'cercospora leaf spot',
+];
+
 const getCornHandler = async (req, res) => {
     try {
         console.log('Test backend!');
@@ -68,6 +75,13 @@ const predictCornHandler = async (req, res) => {
         console.log('finished!');
         const clientimg = await getImage('file://' + path.join(__dirname, '..', 'testing-image', 'testing.jpg'));
         console.log(clientimg);
+        // predict image
+        const predictions = await model.predict(img_tensor).dataSync();
+        for (let i = 0; i < predictions.length; i++) {
+            const label = labels[i];
+            const probability = predictions[i];
+            console.log(`${label}: ${probability}`);
+        }
         return res.status(200).json({
             disease: 'anu',
             prediction: '999',
