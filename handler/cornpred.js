@@ -50,10 +50,10 @@ const getImage = async (filename) => {
 const predictCornHandler = async (req, res) => {
     try {
         // load model
-        if (!model) model = await tf.loadLayersModel(path.join(__dirname, '..', 'models', 'corn-h5', 'model.json'));
+        if (!model) model = await tf.loadLayersModel('file://' + path.join(__dirname, '..', 'models', 'corn-h5', 'model.json'));
         const {model: modelName, img} = req.body;
         console.log('finished!');
-        // const clientimg = await getImage(path.join(__dirname, '..', 'testing-img', 'testing.jpg'));
+        // const clientimg = await getImage('file://' + path.join(__dirname, '..', 'testing-img', 'testing.jpg'));
         // console.log(clientimg);
     } catch (e) {
         console.log(e);
