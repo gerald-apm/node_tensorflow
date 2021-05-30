@@ -7,7 +7,7 @@ const tf = require('@tensorflow/tfjs-node');
 
 const path = require('path');
 const Jimp = require('jimp');
-let model = null;
+let modelfile = null;
 const storage = new Storage();
 
 const labels = [
@@ -74,12 +74,12 @@ const getImage = async (filename) => {
 const predictCornHandler = async (req, res) => {
     try {
         // load model
-        if (!model) model = await tf.loadLayersModel('file://' + path.join(__dirname, '..', 'models', 'corn-h5', 'model.json'));
-        const {model: modelName, img} = req.body;
+        if (!modelfile) modelfile = await tf.loadLayersModel('file://' + path.join(__dirname, '..', 'models', 'corn-h5', 'model.json'));
+        const {model, img} = req.body;
 
         // error thrower
         if (!img) throw Error('harus menampilkan url gambar!');
-        if (!modelName) throw Error('harus menambahkan nama gambar');
+        if (!model) throw Error('harus menambahkan nama gambar');
 
         console.log('finished!');
         // const clientimg = await getImage(path.join(__dirname, '..', 'testing-image', 'testing.jpg'));
@@ -88,7 +88,7 @@ const predictCornHandler = async (req, res) => {
 
         console.log(clientimg);
         // predict image
-        const predictions = await model.predict(clientimg).dataSync();
+        const predictions = await modelfile.predict(clientimg).dataSync();
         for (let i = 0; i < predictions.length; i++) {
             const label = labels[i];
             const probability = predictions[i];
@@ -96,7 +96,7 @@ const predictCornHandler = async (req, res) => {
         }
         return res.status(200).json({
             status: 'success',
-            model: modelName,
+            model: model,
             disease: labels[argMax(predictions)],
             prediction: Math.max(...predictions),
         });
