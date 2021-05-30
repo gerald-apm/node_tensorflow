@@ -76,8 +76,16 @@ const predictCornHandler = async (req, res) => {
         // load model
         if (!model) model = await tf.loadLayersModel('file://' + path.join(__dirname, '..', 'models', 'corn-h5', 'model.json'));
         const {model: modelName, img} = req.body;
+
+        // error thrower
+        if (!img) throw Error('harus menampilkan url gambar!');
+        if (!modelName) throw Error('harus menambahkan nama gambar');
+
         console.log('finished!');
-        const clientimg = await getImage(path.join(__dirname, '..', 'testing-image', 'testing.jpg'));
+        // const clientimg = await getImage(path.join(__dirname, '..', 'testing-image', 'testing.jpg'));
+        // fetch from random url
+        const clientimg = await getImage(img);
+
         console.log(clientimg);
         // predict image
         const predictions = await model.predict(clientimg).dataSync();
@@ -87,13 +95,22 @@ const predictCornHandler = async (req, res) => {
             console.log(`${label}: ${probability}`);
         }
         return res.status(200).json({
+            status: 'success',
+            model: modelName,
             disease: labels[argMax(predictions)],
             prediction: Math.max(...predictions),
         });
     } catch (e) {
         console.log(e);
-        return res.status(500).send('error');
+        return res.status(500).json({
+            status: 'fail',
+            message: e.message,
+        });
     }
+    return res.status(500).json({
+        status: 'failed',
+        message: 'internal server execption',
+    });
 };
 
 const downloadModel = async (
