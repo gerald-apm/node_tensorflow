@@ -83,8 +83,8 @@ const predictCornHandler = async (req, res) => {
             console.log(`${label}: ${probability}`);
         }
         return res.status(200).json({
-            disease: 'anu',
-            prediction: '999',
+            disease: Math.max(...predictions),
+            prediction: Math.max(...predictions),
         });
     } catch (e) {
         console.log(e);
