@@ -55,6 +55,10 @@ const predictCornHandler = async (req, res) => {
         console.log('finished!');
         // const clientimg = await getImage('file://' + path.join(__dirname, '..', 'testing-img', 'testing.jpg'));
         // console.log(clientimg);
+        return res.status(200).json({
+            disease: 'anu',
+            prediction: '999',
+        });
     } catch (e) {
         console.log(e);
         return res.status(500).send('error');
