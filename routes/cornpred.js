@@ -6,7 +6,7 @@ const router = express.Router();
 router.get('/', async = (req, res) => {
     try {
         console.log('Test backend!');
-        res.send({model: 'tomato'});
+        res.send({model: 'corn'});
     } catch (e) {
         console.log(e);
         return res.send('error');
