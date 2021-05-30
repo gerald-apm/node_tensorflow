@@ -3,7 +3,7 @@
 /* eslint-disable no-unused-vars */
 // Imports the Google Cloud client library.
 const {Storage} = require('@google-cloud/storage');
-const tf = require('@tensorflow/tfjs');
+const tf = require('@tensorflow/tfjs-node');
 
 const path = require('path');
 const {Image, createCanvas} = require('canvas');
@@ -50,8 +50,9 @@ const getImage = async (filename) => {
 const predictCornHandler = async (req, res) => {
     try {
         // load model
-        if (!model) model = await tf.loadLayersModel('file:///home/gerald/Documents/vscode/Nodejs-server/node_tensorflow/models/corn-h5/model.json');
+        if (!model) model = await tf.loadLayersModel(path.join(__dirname, '..', 'models', 'corn-h5', 'model.json'));
         const {model: modelName, img} = req.body;
+        console.log('finished!');
         // const clientimg = await getImage(path.join(__dirname, '..', 'testing-img', 'testing.jpg'));
         // console.log(clientimg);
     } catch (e) {
