@@ -8,7 +8,7 @@ const cwd = path.join(__dirname, '../models/corn-h5/');
 
 const storage = new Storage();
 
-const getPotatoHandler = async (req, res) => {
+const getCornHandler = async (req, res) => {
     try {
         console.log('Test backend!');
         res.send({anu: 'hehe'});
@@ -18,7 +18,7 @@ const getPotatoHandler = async (req, res) => {
     }
 };
 
-const predictPotatoHandler = async (req, res) => {
+const predictCornHandler = async (req, res) => {
 
 };
 
@@ -38,4 +38,4 @@ const downloadModel = async (
     );
 };
 
-module.exports = {getPotatoHandler, predictPotatoHandler};
+module.exports = {getCornHandler, predictCornHandler};

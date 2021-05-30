@@ -2,11 +2,11 @@
 /* eslint-disable new-cap */
 const express = require('express');
 const router = express.Router();
-const {getPotatoHandler,
-    predictPotatoHandler,
+const {getCornHandler,
+    predictCornHandler,
 } = require('../handler/cornpred');
 
-router.get('/', getPotatoHandler);
-router.get('/', predictPotatoHandler);
+router.get('/', getCornHandler);
+router.post('/', predictCornHandler);
 
 module.exports = router;
