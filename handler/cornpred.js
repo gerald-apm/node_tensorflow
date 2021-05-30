@@ -17,6 +17,10 @@ const labels = [
     'cercospora leaf spot',
 ];
 
+const argMax = (array) => {
+    return array.map((x, i) => [x, i]).reduce((r, a) => (a[0] > r[0] ? a : r))[1];
+};
+
 const getCornHandler = async (req, res) => {
     try {
         console.log('Test backend!');
@@ -83,7 +87,7 @@ const predictCornHandler = async (req, res) => {
             console.log(`${label}: ${probability}`);
         }
         return res.status(200).json({
-            disease: Math.max(...predictions),
+            disease: labels[argMax(predictions)],
             prediction: Math.max(...predictions),
         });
     } catch (e) {
