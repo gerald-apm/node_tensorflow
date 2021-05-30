@@ -2,15 +2,11 @@
 /* eslint-disable new-cap */
 const express = require('express');
 const router = express.Router();
+const {getPotatoHandler,
+    predictPotatoHandler,
+} = require('../handler/cornpred');
 
-router.get('/', async = (req, res) => {
-    try {
-        console.log('Test backend!');
-        res.send({model: 'corn'});
-    } catch (e) {
-        console.log(e);
-        return res.send('error');
-    }
-});
+router.get('/', getPotatoHandler);
+router.get('/', predictPotatoHandler);
 
 module.exports = router;
