@@ -4,13 +4,13 @@ const Jimp = require('jimp');
 
 const preProcess = (image) =>{
     // const values = imageByteArray(image);
-    image.resize(400, 300);
+    image.resize(224, 224);
     const values = image.bitmap.data;
     const outShape = [1, image.bitmap.width, image.bitmap.height, 4];
     var input = tf.tensor4d(values, outShape, 'float32');
     
     // Slice away alpha
-    input = input.slice([0, 0, 0, 0], [1, image.bitmap.width, image.bitmap.height, 3]);
+    input = input.slice([0, 0, 0, 0], [null, image.bitmap.width, image.bitmap.height, 3]);
 
     return input;
 
