@@ -64,7 +64,7 @@ const predictCornHandler = async (req, res) => {
             model: model,
             imagePath: img,
             disease: disease,
-            prediction: `${prediction.toFixed(3)}%`,
+            prediction: prediction.toFixed(3),
         };
         corn.push(newCorn);
 
@@ -78,7 +78,7 @@ const predictCornHandler = async (req, res) => {
             status: 'success',
             model: model,
             disease: disease,
-            prediction: `${prediction.toFixed(3)}%`,
+            prediction: `${(prediction * 100).toFixed(3)}%`,
         });
     } catch (e) {
         console.log(e);
