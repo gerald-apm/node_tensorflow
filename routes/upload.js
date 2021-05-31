@@ -5,6 +5,6 @@ const router = express.Router();
 const {getUploadHandler, addFileUploadHandler} = require('../handler/upload');
 
 router.get('/', getUploadHandler);
-router.get('/', addFileUploadHandler);
+router.post('/', addFileUploadHandler);
 
 module.exports = router;

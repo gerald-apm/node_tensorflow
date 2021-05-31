@@ -1,4 +1,4 @@
-const getIndexHandler = async (req, res) => {
+const getUploadHandler = async (req, res) => {
     try {
         const {name = 'fulan', hobby = 'senyum'} = req.query;
         console.log(`Nama saya ${name} dan hobi saya ${hobby}`);
@@ -23,4 +23,4 @@ const addFileUploadHandler = async (req, res) => {
 
 }
 
-module.exports = {getIndexHandler, addFileUploadHandler};
+module.exports = {getUploadHandler, addFileUploadHandler};
