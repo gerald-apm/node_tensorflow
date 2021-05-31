@@ -6,13 +6,13 @@ let corndata = {
 
 const cornfile = path.join(__dirname, '..', 'database', 'corndata.json');
 
-const writeCorn = () => {
+const writeCorn = async () => {
     const json = JSON.stringify(corndata);
-    fs.writeFileSync(cornfile, json, 'utf8');
+    await fs.writeFile(cornfile, json, 'utf8');
 };
 
-const readCorn = () => {
-    fs.readFile(cornfile, 'utf8', (err, data) => {
+const readCorn = async () => {
+    await fs.readFile(cornfile, 'utf8', (err, data) => {
         if (err) {
             console.log(err);
             throw Error('cannot read data!');
@@ -23,9 +23,9 @@ const readCorn = () => {
     });
 };
 
-const deleteCorn = () => {
+const deleteCorn = async () => {
     corndata.corn = [];
     const json = JSON.stringify(corndata);
-    fs.writeFileSync(cornfile, json, 'utf8');
+    await fs.writeFile(cornfile, json, 'utf8');
 };
 module.exports = {corndata, writeCorn, readCorn, deleteCorn};
