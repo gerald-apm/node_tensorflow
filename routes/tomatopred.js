@@ -3,14 +3,13 @@
 const express = require('express');
 const router = express.Router();
 
-router.get('/', async = (req, res) => {
-    try {
-        console.log('Test backend!');
-        res.send({model: 'tomato'});
-    } catch (e) {
-        console.log(e);
-        return res.send('error');
-    }
-});
+const {getTomatoHandler,
+    predictTomatoHandler,
+    deleteTomatoHandler
+} = require('../handler/tomatopred');
+
+router.get('/', getTomatoHandler);
+router.post('/', predictTomatoHandler);
+router.delete('/', deleteTomatoHandler);
 
 module.exports = router;

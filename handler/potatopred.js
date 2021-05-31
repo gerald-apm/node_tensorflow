@@ -2,7 +2,7 @@ const tf = require('@tensorflow/tfjs-node');
 const path = require('path');
 const {getImage} = require('../utils/loadImage');
 const {downloadModel} = require('../utils/downloadModels');
-const tomato =  require('../datahandler/tomato');
+const potato =  require('../datahandler/potato');
 let modelfile = null;
 
 const labels = [
@@ -12,12 +12,16 @@ const labels = [
     'cercospora leaf spot',
 ];
 
-const getTomatoHandler = (req, res) => {
+const argMax = (array) => {
+    return [].reduce.call(array, (m, c, i, arr) => c > arr[m] ? i : m, 0);
+};
+
+const getPotatoHandler = (req, res) => {
     try {
         return res.status(200).json({
             status: 'success',
             data: {
-                tomato,
+                potato,
             },
         });
     } catch (e) {
@@ -33,7 +37,7 @@ const getTomatoHandler = (req, res) => {
     });
 };
 
-const predictTomatoHandler = (req, res) => {
+const predictPotatoHandler = (req, res) => {
     try {
         return res.status(200).json({
             status: 'success',
@@ -53,10 +57,11 @@ const predictTomatoHandler = (req, res) => {
         message: 'internal server execption',
     });
 };
-const deleteTomatoHandler = (req, res) => {
+
+const deletePotatoHandler = (req, res) => {
     try {
-        if (tomato.length < 1) throw Error("tomato entry already cleared");
-        tomato.splice(0, corn.length);
+        if (potato.length < 1) throw Error("potato entry already cleared");
+        potato.splice(0, corn.length);
         return res.status(200).json({
             status: 'success',
             message: 'all data cleared'
@@ -74,8 +79,4 @@ const deleteTomatoHandler = (req, res) => {
     });
 };
 
-const argMax = (array) => {
-    return [].reduce.call(array, (m, c, i, arr) => c > arr[m] ? i : m, 0);
-};
-
-module.exports = {getTomatoHandler, predictTomatoHandler, deleteTomatoHandler};
+module.exports = {getPotatoHandler, predictPotatoHandler, deletePotatoHandler};
