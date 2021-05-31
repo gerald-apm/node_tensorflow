@@ -93,4 +93,24 @@ const predictCornHandler = async (req, res) => {
     });
 };
 
-module.exports = {getCornHandler, predictCornHandler};
+const deleteCornHandler = async (req, res) => {
+    try {
+        corn.splice(o, corn.length);
+        return res.status(200).json({
+            status: 'success',
+            message: 'all data cleared'
+        });
+    } catch (e) {
+        console.log(e);
+        return res.status(400).json({
+            status: 'fail',
+            message: e.message,
+        });
+    }
+    return res.status(500).json({
+        status: 'failed',
+        message: 'internal server execption',
+    });
+}
+
+module.exports = {getCornHandler, predictCornHandler, deleteCornHandler};
