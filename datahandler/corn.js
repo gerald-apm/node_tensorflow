@@ -27,6 +27,6 @@ const readCorn = () => {
 const deleteCorn = () => {
     corndata.corn = [];
     const json = JSON.stringify(corndata);
-    fs.writeFileSync(cornfile, json, 'utf8', callback);
+    fs.writeFileSync(cornfile, json, 'utf8');
 };
 module.exports = {corndata, writeCorn, readCorn, deleteCorn};
