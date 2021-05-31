@@ -3,6 +3,8 @@ const logger = require('morgan');
 const app = express();
 const cors = require('cors');
 const port = 5000;
+const hostname = process.env.NODE_ENV !== 'production' ?
+    'localhost' : '34.136.47.193';
 const indexRouter = require('./routes/index');
 const tomatoRouter = require('./routes/tomatopred');
 const cornRouter = require('./routes/cornpred');
@@ -24,5 +26,5 @@ app.use('/upload', express.static('html'));
 app.use(cors());
 
 app.listen(port, () => {
-    console.log(`Server berjalan pada port ${port}`);
+    console.log(`Server berjalan pada host ${hostname} dan port ${port}`);
 });
