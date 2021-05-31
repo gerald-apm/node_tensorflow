@@ -34,7 +34,6 @@ const addFileUploadHandler = (req, res) => {
         // TODO: Change localhost with external IP
         const newFile = {
             filename: filename,
-            path: path,
             url: 'http://' + hostname + ':5000' + '/download/' + filename,
         };
         files.push(newFile);

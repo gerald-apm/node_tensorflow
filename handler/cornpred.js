@@ -70,7 +70,7 @@ const predictCornHandler = async (req, res) => {
 
         const newCorn = {
             model: model,
-            imagePath: img,
+            imageName: img,
             imageUrl: url,
             disease: disease,
             prediction: prediction.toFixed(3),
