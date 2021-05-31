@@ -5,7 +5,7 @@ const tf = require('@tensorflow/tfjs-node');
 const path = require('path');
 const {getImage} = require('../utils/loadImage');
 const {downloadModel} = require('../utils/downloadModels');
-const {corn, writeCorn, readCorn, deleteCorn} = require('../datahandler/corn');
+const {corndata, writeCorn, readCorn, deleteCorn} = require('../datahandler/corn');
 const files = require('../datahandler/upload');
 const hostname = process.env.NODE_ENV !== 'production' ?
     'localhost' : '34.136.47.193';
@@ -26,6 +26,7 @@ const argMax = (array) => {
 const getCornHandler = async (req, res) => {
     try {
         readCorn();
+        const corn = corndata.corn;
         return res.status(200).json({
             status: 'success',
             data: {
@@ -77,7 +78,7 @@ const predictCornHandler = async (req, res) => {
             prediction: prediction.toFixed(3),
 
         };
-        corn.push(newCorn);
+        corndata.corn.push(newCorn);
         writeCorn();
         for (let i = 0; i < predictions.length; i++) {
             const label = labels[i];
