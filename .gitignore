@@ -13,7 +13,7 @@ credentials
 #models
 
 #ai client image
-client-img
+client-img/*
 
 #python testing
 converter

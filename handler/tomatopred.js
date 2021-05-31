@@ -55,11 +55,11 @@ const predictTomatoHandler = (req, res) => {
 };
 const deleteTomatoHandler = (req, res) => {
     try {
-        if (tomato.length < 1) throw Error("tomato entry already cleared");
+        if (tomato.length < 1) throw Error('tomato entry already cleared');
         tomato.splice(0, corn.length);
         return res.status(200).json({
             status: 'success',
-            message: 'all data cleared'
+            message: 'all data cleared',
         });
     } catch (e) {
         console.log(e);

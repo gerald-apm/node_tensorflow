@@ -60,11 +60,11 @@ const predictPotatoHandler = (req, res) => {
 
 const deletePotatoHandler = (req, res) => {
     try {
-        if (potato.length < 1) throw Error("potato entry already cleared");
+        if (potato.length < 1) throw Error('potato entry already cleared');
         potato.splice(0, corn.length);
         return res.status(200).json({
             status: 'success',
-            message: 'all data cleared'
+            message: 'all data cleared',
         });
     } catch (e) {
         console.log(e);

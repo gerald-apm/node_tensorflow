@@ -18,6 +18,8 @@ app.use('/predict/tomato', tomatoRouter);
 app.use('/predict/corn', cornRouter);
 app.use('/predict/potato', potatoRouter);
 app.use('/upload', uploadRouter);
+app.use('/download', express.static('client-img'));
+app.use('/upload', express.static('html'));
 
 app.use(cors());
 

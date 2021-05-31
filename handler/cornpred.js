@@ -28,7 +28,7 @@ const getCornHandler = async (req, res) => {
             },
         });
     } catch (e) {
-        console.log(e);
+        console.log(e.message);
         return res.status(400).json({
             status: 'fail',
             message: e.message,
@@ -52,7 +52,7 @@ const predictCornHandler = async (req, res) => {
         console.log('finished!');
         // const clientimg = await getImage(path.join(__dirname, '..', 'testing-image', 'testing.jpg'));
         // fetch from random url
-        const clientimg = await getImage(path.join(__dirname, '..', 'testing-image', img));
+        const clientimg = await getImage(path.join(__dirname, '..', 'client-img', img));
 
         console.log(clientimg);
         // predict image
@@ -82,7 +82,7 @@ const predictCornHandler = async (req, res) => {
             prediction: `${(prediction * 100).toFixed(3)}%`,
         });
     } catch (e) {
-        console.log(e);
+        console.log(e.message);
         return res.status(400).json({
             status: 'fail',
             message: e.message,
@@ -103,7 +103,7 @@ const deleteCornHandler = async (req, res) => {
             message: 'all data cleared',
         });
     } catch (e) {
-        console.log(e);
+        console.log(e.message);
         return res.status(400).json({
             status: 'fail',
             message: e.message,
