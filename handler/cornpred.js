@@ -5,7 +5,7 @@ const tf = require('@tensorflow/tfjs-node');
 const path = require('path');
 const {getImage} = require('../utils/loadImage');
 const {downloadModel} = require('../utils/downloadModels');
-const corn =  require('../datahandler/corn');
+const corn = require('../datahandler/corn');
 let modelfile = null;
 
 const labels = [
@@ -65,7 +65,7 @@ const predictCornHandler = async (req, res) => {
             imagePath: img,
             disease: disease,
             prediction: prediction.toFixed(3),
-            
+
         };
         corn.push(newCorn);
 
@@ -96,11 +96,11 @@ const predictCornHandler = async (req, res) => {
 
 const deleteCornHandler = async (req, res) => {
     try {
-        if (corn.length < 1) throw Error("corn entry already cleared");
+        if (corn.length < 1) throw Error('corn entry already cleared');
         corn.splice(0, corn.length);
         return res.status(200).json({
             status: 'success',
-            message: 'all data cleared'
+            message: 'all data cleared',
         });
     } catch (e) {
         console.log(e);
@@ -113,6 +113,6 @@ const deleteCornHandler = async (req, res) => {
         status: 'failed',
         message: 'internal server execption',
     });
-}
+};
 
 module.exports = {getCornHandler, predictCornHandler, deleteCornHandler};
