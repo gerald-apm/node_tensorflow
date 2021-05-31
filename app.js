@@ -7,6 +7,7 @@ const indexRouter = require('./routes/index');
 const tomatoRouter = require('./routes/tomatopred');
 const cornRouter = require('./routes/cornpred');
 const potatoRouter = require('./routes/potatopred');
+const uploadRouter = require('./routes/upload');
 
 app.use(logger('dev'));
 app.use(express.json());
@@ -16,6 +17,7 @@ app.use('/', indexRouter);
 app.use('/predict/tomato', tomatoRouter);
 app.use('/predict/corn', cornRouter);
 app.use('/predict/potato', potatoRouter);
+app.use('/upload', uploadRouter);
 
 app.use(cors());
 
