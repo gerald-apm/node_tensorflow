@@ -1,12 +1,26 @@
 /* eslint-disable max-len */
 const tf = require('@tensorflow/tfjs-node');
 const Jimp = require('jimp');
+
+const preProcess = (image) =>{
+    // const values = imageByteArray(image);
+    image.resize(400, 300);
+    const values = image.bitmap.data;
+    const outShape = [1, image.bitmap.width, image.bitmap.height, 4];
+    var input = tf.tensor4d(values, outShape, 'float32');
+    
+    // Slice away alpha
+    input = input.slice([0, 0, 0, 0], [1, image.bitmap.width, image.bitmap.height, 3]);
+
+    return input;
+
+};
+
 const loadLocalImage = async (filename) => {
     try {
         const image = await Jimp.read(filename);
-        image.cover(224, 224, Jimp.HORIZONTAL_ALIGN_CENTER | Jimp.VERTICAL_ALIGN_MIDDLE);
-
-        const NUM_OF_CHANNELS = 3;
+        return preProcess(image);
+        /* const NUM_OF_CHANNELS = 3;
         const values = new Float32Array(224 * 224 * NUM_OF_CHANNELS);
 
         let i = 0;
@@ -25,8 +39,8 @@ const loadLocalImage = async (filename) => {
         const outShape = [224, 224, NUM_OF_CHANNELS];
         let imgTensor = tf.tensor3d(values, outShape, 'float32');
         imgTensor = imgTensor.expandDims(0);
-
         return imgTensor;
+        */
     } catch (err) {
         console.log(err);
     }
