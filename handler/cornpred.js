@@ -65,6 +65,7 @@ const predictCornHandler = async (req, res) => {
             imagePath: img,
             disease: disease,
             prediction: prediction.toFixed(3),
+            
         };
         corn.push(newCorn);
 
