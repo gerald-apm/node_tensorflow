@@ -52,7 +52,7 @@ const predictCornHandler = async (req, res) => {
         console.log('finished!');
         // const clientimg = await getImage(path.join(__dirname, '..', 'testing-image', 'testing.jpg'));
         // fetch from random url
-        const clientimg = await getImage(ipath.join(__dirname, '..', 'testing-image', img));
+        const clientimg = await getImage(path.join(__dirname, '..', 'testing-image', img));
 
         console.log(clientimg);
         // predict image
