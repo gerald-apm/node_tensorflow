@@ -6,6 +6,9 @@ const path = require('path');
 const {getImage} = require('../utils/loadImage');
 const {downloadModel} = require('../utils/downloadModels');
 const corn = require('../datahandler/corn');
+const hostname = process.env.NODE_ENV !== 'production' ?
+    'localhost' : '34.136.47.193';
+
 let modelfile = null;
 
 const labels = [
