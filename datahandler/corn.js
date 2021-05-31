@@ -20,7 +20,7 @@ const readCorn = () => {
             throw Error('cannot read data!');
         } else {
             corndata = JSON.parse(data);
-            console.write(corndata);
+            console.log(corndata);
             corn = corndata.corn;
         }
     });
