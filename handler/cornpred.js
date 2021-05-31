@@ -56,7 +56,7 @@ const predictCornHandler = async (req, res) => {
         if (!model) throw Error('harus menambahkan nama gambar');
 
         const index = files.filter((n) => n.filename === img)[0];
-        if (index === undefined) throw Error('gambar tidak ditemukan');
+        // if (index === undefined) throw Error('gambar tidak ditemukan');
 
         console.log('finished!');
         // const clientimg = await getImage(path.join(__dirname, '..', 'testing-image', 'testing.jpg'));
