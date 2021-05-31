@@ -95,7 +95,7 @@ const predictCornHandler = async (req, res) => {
 
 const deleteCornHandler = async (req, res) => {
     try {
-        corn.splice(o, corn.length);
+        corn.splice(0, corn.length);
         return res.status(200).json({
             status: 'success',
             message: 'all data cleared'
