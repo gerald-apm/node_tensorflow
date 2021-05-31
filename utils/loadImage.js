@@ -10,7 +10,7 @@ const preProcess = (image) =>{
     var input = tf.tensor4d(values, outShape, 'float32');
     
     // Slice away alpha
-    input = input.slice([0, 0, 0, 0], [null, image.bitmap.width, image.bitmap.height, 3]);
+    input = input.slice([0, 0, 0, 0], [1, image.bitmap.width, image.bitmap.height, 3]);
 
     return input;
 
