@@ -1,10 +1,10 @@
 const getIndexHandler = async (req, res) => {
     try {
-        const {name, hobby} = req.query;
+        const {name = 'fulan', hobby = 'senyum'} = req.query;
         console.log(`Nama saya ${name} dan hobi saya ${hobby}`);
         return res.status(200).json({
             status: 'success',
-            message: 'nama saya ${name} dan hobi saya ${hobby}',
+            message: `nama saya ${name} dan hobi saya ${hobby}`,
         });
     } catch (e) {
         console.log(e);
