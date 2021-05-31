@@ -6,6 +6,7 @@ const path = require('path');
 const {getImage} = require('../utils/loadImage');
 const {downloadModel} = require('../utils/downloadModels');
 const corn = require('../datahandler/corn');
+const files = require('../datahandler/upload');
 const hostname = process.env.NODE_ENV !== 'production' ?
     'localhost' : '34.136.47.193';
 
@@ -52,6 +53,9 @@ const predictCornHandler = async (req, res) => {
         if (!img) throw Error('harus menampilkan url gambar!');
         if (!model) throw Error('harus menambahkan nama gambar');
 
+        const index = files.findIndex((n) => n.filename === img);
+        if (!index) throw Error('gambar tidak ditemukan');
+
         console.log('finished!');
         // const clientimg = await getImage(path.join(__dirname, '..', 'testing-image', 'testing.jpg'));
         // fetch from random url
@@ -62,7 +66,7 @@ const predictCornHandler = async (req, res) => {
         const predictions = await modelfile.predict(clientimg).dataSync();
         const prediction = Math.max(...predictions);
         const disease = labels[argMax(predictions)];
-        const url = 'http://' + hostname + ':5000' + '/download/' + filename;
+        const url = 'http://' + hostname + ':5000' + '/download/' + img;
 
         const newCorn = {
             model: model,
