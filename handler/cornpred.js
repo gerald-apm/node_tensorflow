@@ -53,7 +53,7 @@ const predictCornHandler = async (req, res) => {
         if (!img) throw Error('harus menampilkan url gambar!');
         if (!model) throw Error('harus menambahkan nama gambar');
 
-        const index = files.findIndex((n) => n.filename === img);
+        const index = files.findIndex((n) => n.filename === img)[0];
         if (!index) throw Error('gambar tidak ditemukan');
 
         console.log('finished!');
