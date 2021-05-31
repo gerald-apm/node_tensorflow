@@ -5,7 +5,7 @@ const tf = require('@tensorflow/tfjs-node');
 const path = require('path');
 const {getImage} = require('../utils/loadImage');
 const {downloadModel} = require('../utils/downloadModels');
-const corn = require('../datahandler/corn');
+const {corn, writeCorn, readCorn, deleteCorn} = require('../datahandler/corn');
 const files = require('../datahandler/upload');
 const hostname = process.env.NODE_ENV !== 'production' ?
     'localhost' : '34.136.47.193';
@@ -25,6 +25,7 @@ const argMax = (array) => {
 
 const getCornHandler = async (req, res) => {
     try {
+        readCorn();
         return res.status(200).json({
             status: 'success',
             data: {
@@ -77,7 +78,7 @@ const predictCornHandler = async (req, res) => {
 
         };
         corn.push(newCorn);
-
+        writeCorn();
         for (let i = 0; i < predictions.length; i++) {
             const label = labels[i];
             const probability = predictions[i];
@@ -107,6 +108,7 @@ const deleteCornHandler = async (req, res) => {
     try {
         if (corn.length < 1) throw Error('corn entry already cleared');
         corn.splice(0, corn.length);
+        deleteCorn();
         return res.status(200).json({
             status: 'success',
             message: 'all data cleared',
