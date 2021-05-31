@@ -78,7 +78,7 @@ const predictCornHandler = async (req, res) => {
             status: 'success',
             model: model,
             disease: disease,
-            prediction: prediction,
+            prediction: `${prediction.toFixed(3)}%`,
         });
     } catch (e) {
         console.log(e);
