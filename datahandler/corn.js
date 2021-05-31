@@ -7,7 +7,6 @@ let corndata = {
 const cornfile = path.join(__dirname, '..', 'database', 'corndata.json');
 
 const writeCorn = () => {
-    corndata.corn;
     const json = JSON.stringify(corndata);
     fs.writeFileSync(cornfile, json, 'utf8');
 };
