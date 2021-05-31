@@ -14,6 +14,7 @@ credentials
 
 #ai client image
 client-img/*
+!client-img/.gitkeep
 
 #python testing
 converter
