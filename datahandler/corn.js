@@ -5,7 +5,7 @@ let corndata = {
 };
 let corn = [];
 
-const cornfile = path.join(__dirname, '..', 'database', 'corndata');
+const cornfile = path.join(__dirname, '..', 'database', 'corndata.json');
 
 const writeCorn = () => {
     corndata.corn = corn;
