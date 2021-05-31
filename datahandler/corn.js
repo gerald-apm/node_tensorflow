@@ -8,28 +8,20 @@ const cornfile = path.join(__dirname, '..', 'database', 'corndata.json');
 
 const writeCorn = () => {
     const json = JSON.stringify(corndata);
-    fs.writeFileSync(cornfile, json, 'utf8', () => {
-        console.log('write completed');
-    });
+    fs.writeFileSync(cornfile, json, 'utf8');
+    console.log('write completed');
 };
 
 const readCorn = () => {
-    fs.readFileSync(cornfile, 'utf8', (err, data) => {
-        if (err) {
-            console.log(err);
-            throw Error('cannot read data!');
-        } else {
-            corndata = JSON.parse(data);
-            console.log(corndata);
-        }
-    });
+    const rawdata = fs.readFileSync(cornfile, 'utf8');
+    corndata = JSON.parse(rawdata);
+    console.log(corndata);
 };
 
 const deleteCorn = () => {
     corndata.corn = [];
     const json = JSON.stringify(corndata);
-    fs.writeFileSync(cornfile, json, 'utf8', () => {
-        console.log('delete completed');
-    });
+    fs.writeFileSync(cornfile, json, 'utf8');
+    console.log('delete completed');
 };
 module.exports = {corndata, writeCorn, readCorn, deleteCorn};
