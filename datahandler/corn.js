@@ -19,7 +19,6 @@ const readCorn = () => {
 };
 
 const deleteCorn = () => {
-    corndata.corn = [];
     const json = JSON.stringify(corndata);
     fs.writeFileSync(cornfile, json, 'utf8');
     console.log('delete completed');
