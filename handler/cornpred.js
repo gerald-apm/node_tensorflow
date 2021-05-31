@@ -5,6 +5,7 @@ const tf = require('@tensorflow/tfjs-node');
 const path = require('path');
 const {getImage} = require('../utils/loadImage');
 const {downloadModel} = require('../utils/downloadModels');
+const corn =  require('../datahandler/corn');
 let modelfile = null;
 
 const labels = [
@@ -20,12 +21,23 @@ const argMax = (array) => {
 
 const getCornHandler = async (req, res) => {
     try {
-        console.log('Test backend!');
-        res.send({anu: 'hehe'});
+        return res.status(200).json({
+            status: 'success',
+            data: {
+                corn,
+            },
+        });
     } catch (e) {
         console.log(e);
-        return res.send('error');
+        return res.status(400).json({
+            status: 'fail',
+            message: e.message,
+        });
     }
+    return res.status(500).json({
+        status: 'failed',
+        message: 'internal server execption',
+    });
 };
 
 const predictCornHandler = async (req, res) => {
@@ -45,16 +57,28 @@ const predictCornHandler = async (req, res) => {
         console.log(clientimg);
         // predict image
         const predictions = await modelfile.predict(clientimg).dataSync();
+        const prediction = Math.max(...predictions);
+        const disease = labels[argMax(predictions)];
+
+        const newCorn = {
+            model: model,
+            imagePath: img,
+            disease: disease,
+            prediction: prediction,
+        };
+        corn.push(newCorn);
+
         for (let i = 0; i < predictions.length; i++) {
             const label = labels[i];
             const probability = predictions[i];
             console.log(`${label}: ${probability}`);
         }
+
         return res.status(200).json({
             status: 'success',
             model: model,
-            disease: labels[argMax(predictions)],
-            prediction: Math.max(...predictions),
+            disease: disease,
+            prediction: prediction,
         });
     } catch (e) {
         console.log(e);
