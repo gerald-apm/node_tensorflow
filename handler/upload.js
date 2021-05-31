@@ -29,11 +29,12 @@ const addFileUploadHandler = (req, res) => {
         if (req.rval) {
             throw Error(req.rval);
         }
-        const {filename, path} = req.file;
+        const {filename, mimetype} = req.file;
         // add new entry
         // TODO: Change localhost with external IP
         const newFile = {
             filename: filename,
+            mimetype: mimetype,
             url: 'http://' + hostname + ':5000' + '/download/' + filename,
         };
         files.push(newFile);
@@ -41,7 +42,7 @@ const addFileUploadHandler = (req, res) => {
         return res.status(200).json({
             status: 'success',
             filename: filename,
-            path: path,
+            url: 'http://' + hostname + ':5000' + '/download/' + filename,
         });
     } catch (e) {
         console.log(e.message);
