@@ -59,10 +59,12 @@ const predictCornHandler = async (req, res) => {
         const predictions = await modelfile.predict(clientimg).dataSync();
         const prediction = Math.max(...predictions);
         const disease = labels[argMax(predictions)];
+        const url = 'http://' + hostname + ':5000' + '/download/' + filename;
 
         const newCorn = {
             model: model,
             imagePath: img,
+            imageUrl: url,
             disease: disease,
             prediction: prediction.toFixed(3),
 
