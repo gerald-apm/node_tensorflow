@@ -95,6 +95,7 @@ const predictCornHandler = async (req, res) => {
 
 const deleteCornHandler = async (req, res) => {
     try {
+        if (corn.length < 1) throw Error("corn entry already cleared");
         corn.splice(0, corn.length);
         return res.status(200).json({
             status: 'success',
