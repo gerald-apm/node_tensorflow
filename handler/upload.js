@@ -1,5 +1,6 @@
 /* eslint-disable max-len */
 const tf = require('@tensorflow/tfjs-node');
+const {getImage} = require('../utils/loadImage');
 const {writeFile, readFile} = require('../datahandler/upload');
 const path = require('path');
 const hostname = require('../utils/localhost');
