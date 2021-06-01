@@ -89,7 +89,7 @@ const deleteFileUploadHandler = (req, res) => {
         const index = uploadfiles.files.filter((n) => n.model === model)[0];
         if (index === undefined) throw Error('files entry already cleared');
         for( let i = 0; i < uploadfiles.files.length; i++){                  
-            if ( uploadfiles.files.length === model) { 
+            if ( uploadfiles.files.model === model) { 
                 uploadfiles.files.splice(i, 1); 
                 i--; 
             }
