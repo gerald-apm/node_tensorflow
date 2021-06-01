@@ -94,6 +94,7 @@ const deleteFileUploadHandler = (req, res) => {
                 i--; 
             }
         }
+        console.log('cleared!');
         writeFile(uploadfiles);
 
         return res.status(200).json({
