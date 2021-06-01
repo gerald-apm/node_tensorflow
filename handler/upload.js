@@ -73,6 +73,7 @@ const addFileUploadHandler = (req, res) => {
 
 const deleteFileUploadHandler = (req, res) => {
     const model = req.query.model;
+    if (!model) { throw Error ('model name required'); }
     const directory = path.join(__dirname, '..', 'client-img', model);
     try {
         fs.readdir(directory, (err, files) => {
