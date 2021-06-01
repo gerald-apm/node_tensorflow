@@ -1,26 +1,30 @@
 const fs = require('fs');
 const path = require('path');
-let corndata = {
-    corn: [],
-};
-
 const cornfile = path.join(__dirname, '..', 'database', 'corndata.json');
 
-const writeCorn = () => {
-    const json = JSON.stringify(corndata);
-    fs.writeFileSync(cornfile, json, 'utf8');
-    console.log('write completed');
+const readFile = () => {
+    try {
+        const jsonString = fs.readFileSync(cornfile, 'utf8');
+        const parsedjson = JSON.parse(jsonString);
+        console.log('read completed');
+        console.log(parsedjson);
+        return parsedjson;
+    } catch (err) {
+        console.log(err);
+        return;
+    }
 };
 
-const readCorn = () => {
-    const rawdata = fs.readFileSync(cornfile, 'utf8');
-    corndata = JSON.parse(rawdata);
-    console.log(corndata);
+const writeFile = (arr) => {
+    try {
+        const jsonString = JSON.stringify(arr);
+        fs.writeFileSync(cornfile, jsonString);
+        console.log('write completed');
+        return;
+    } catch (err) {
+        console.log(err);
+        return;
+    }
 };
 
-const deleteCorn = () => {
-    const json = JSON.stringify(corndata);
-    fs.writeFileSync(cornfile, json, 'utf8');
-    console.log('delete completed');
-};
-module.exports = {corndata, writeCorn, readCorn, deleteCorn};
+module.exports = {writeFile, readFile};
