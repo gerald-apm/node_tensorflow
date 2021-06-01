@@ -1,10 +1,17 @@
-const files = require('../datahandler/upload');
+/* eslint-disable max-len */
+const {writeFile, readFile} = require('../datahandler/upload');
 const path = require('path');
 const hostname = process.env.NODE_ENV !== 'production' ?
     'localhost' : '35.188.36.119';
 const fs = require('fs');
+let uploadfiles = {
+    files: [],
+};
+
 const getUploadHandler = (req, res) => {
     try {
+        uploadfiles = readFile();
+        const files = uploadfiles.files;
         return res.status(200).json({
             status: 'success',
             data: {
@@ -37,7 +44,8 @@ const addFileUploadHandler = (req, res) => {
             mimetype: mimetype,
             url: 'http://' + hostname + ':5000' + '/download/' + filename,
         };
-        files.push(newFile);
+        uploadfiles.files.push(newFile);
+        writeFile(uploadfiles);
 
         return res.status(200).json({
             status: 'success',
@@ -69,8 +77,10 @@ const deleteFileUploadHandler = (req, res) => {
                 });
             }
         });
-        if (files.length < 1) throw Error('files entry already cleared');
-        files.splice(0, files.length);
+        if (uploadfiles.files.length < 1) throw Error('files entry already cleared');
+        uploadfiles.files.splice(0, files.length);
+        writeFile(uploadfiles);
+
         return res.status(200).json({
             status: 'success',
             message: 'all data cleared',
