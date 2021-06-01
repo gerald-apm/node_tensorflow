@@ -7,8 +7,7 @@ const {getImage} = require('../utils/loadImage');
 const {downloadModel} = require('../utils/downloadModels');
 const {writeFile, readFile} = require('../datahandler/corn');
 const {readFile: readUploadFile} = require('../datahandler/upload');
-const hostname = process.env.NODE_ENV !== 'production' ?
-    'localhost' : '35.188.36.119';
+const hostname = require('../utils/localhost');
 let corndata = {
     corn: [],
 };
@@ -71,7 +70,7 @@ const predictCornHandler = async (req, res) => {
         const predictions = await modelfile.predict(clientimg).dataSync();
         const prediction = Math.max(...predictions);
         const disease = labels[argMax(predictions)];
-        const url = 'http://' + hostname + ':5000' + '/download/' + img;
+        const url = 'http://' + hostname + ':5000' + '/download/' + model + '/' + img;
 
         const newCorn = {
             model: model,

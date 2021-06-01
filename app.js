@@ -3,8 +3,7 @@ const logger = require('morgan');
 const app = express();
 const cors = require('cors');
 const port = 5000;
-const hostname = process.env.NODE_ENV !== 'production' ?
-    'localhost' : '35.188.36.119';
+const hostname = require('../utils/localhost');
 const indexRouter = require('./routes/index');
 const tomatoRouter = require('./routes/tomatopred');
 const cornRouter = require('./routes/cornpred');
