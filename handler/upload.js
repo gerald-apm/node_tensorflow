@@ -122,66 +122,6 @@ const addFileUploadHandler = async (req, res) => {
     });
 };
 
-const predictCornHandler = async (req, res) => {
-    try {
-        // load model
-        // TODO: load model from different plants
-        if (!modelfile) modelfile = await tf.loadLayersModel('file://' + path.join(__dirname, '..', 'models', 'corn-h5', 'model.json'));
-        const {model, img} = req.body;
-        // error thrower
-        if (!img) throw Error('harus menampilkan url gambar!');
-        if (!model) throw Error('harus menambahkan nama gambar');
-        const uploadfiles = readUploadFile();
-        const files = uploadfiles.files;
-        const index = files.filter((n) => n.filename === img)[0];
-        if (index === undefined) throw Error('gambar tidak ditemukan');
-
-        // const clientimg = await getImage(path.join(__dirname, '..', 'testing-image', 'testing.jpg'));
-        // fetch from random url
-        const clientimg = await getImage(path.join(__dirname, '..', 'client-img', img));
-
-        console.log(clientimg);
-        // predict image
-        const predictions = await modelfile.predict(clientimg).dataSync();
-        const prediction = Math.max(...predictions);
-        const disease = labels[argMax(predictions)];
-        const url = 'http://' + hostname + ':5000' + '/download/' + model + '/' + img;
-
-        const newCorn = {
-            model: model,
-            imageName: img,
-            imageUrl: url,
-            disease: disease,
-            prediction: prediction.toFixed(3),
-
-        };
-        corndata.corn.push(newCorn);
-        writeFile(corndata);
-        for (let i = 0; i < predictions.length; i++) {
-            const label = labels[i];
-            const probability = predictions[i];
-            console.log(`${label}: ${probability}`);
-        }
-
-        return res.status(200).json({
-            status: 'success',
-            model: model,
-            disease: disease,
-            prediction: `${(prediction * 100).toFixed(3)}%`,
-        });
-    } catch (e) {
-        console.log(e.message);
-        return res.status(400).json({
-            status: 'fail',
-            message: e.message,
-        });
-    }
-    return res.status(500).json({
-        status: 'failed',
-        message: 'internal server execption',
-    });
-};
-
 
 const deleteFileUploadHandler = (req, res) => {
     try {
