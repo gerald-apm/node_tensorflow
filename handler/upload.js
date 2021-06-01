@@ -107,6 +107,7 @@ const addFileUploadHandler = async (req, res) => {
 const predictCornHandler = async (req, res) => {
     try {
         // load model
+        // TODO: load model from different plants
         if (!modelfile) modelfile = await tf.loadLayersModel('file://' + path.join(__dirname, '..', 'models', 'corn-h5', 'model.json'));
         const {model, img} = req.body;
         // error thrower
