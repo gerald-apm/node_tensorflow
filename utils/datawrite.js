@@ -4,6 +4,11 @@ const readFileUtil = (filepath) => {
     try {
         const jsonString = fs.readFileSync(filepath, 'utf8');
         const parsedjson = JSON.parse(jsonString);
+        if (!parsedjson) {
+            const obj = {};
+            writeFileUtil(obj, filepath);
+            console.log('new JSON initialized');
+        }
         console.log('read completed');
         console.log(parsedjson);
         return parsedjson;
