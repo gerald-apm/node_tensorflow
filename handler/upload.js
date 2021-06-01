@@ -51,7 +51,7 @@ const addFileUploadHandler = async (req, res) => {
     try {
         const {filename, mimetype} = req.file;
         const model = req.query.model;
-        let label = null;
+        let labels = null;
         console.log(model);
         
         if (!model) { throw Error('model is not found'); }
@@ -60,17 +60,17 @@ const addFileUploadHandler = async (req, res) => {
             if (model === 'corn') {
                 // model corn
                 modelfile = await tf.loadLayersModel('file://' + path.join(__dirname, '..', 'models', 'corn-h5', 'model.json'));
-                label = labelcorn;
+                labels = labelcorn;
             }
             else if (model === 'potato') {
                 // model potato
                 modelfile = await tf.loadLayersModel('file://' + path.join(__dirname, '..', 'models', 'corn-h5', 'model.json'));
-                label = labelpotato;
+                labels = labelpotato;
             }
             else if (model === 'tomato') {
                  // model potato
                 modelfile = await tf.loadLayersModel('file://' + path.join(__dirname, '..', 'models', 'corn-h5', 'model.json'));
-                label = labeltomato;
+                labels = labeltomato;
             } else {
                 throw Error('model not found');
             }
