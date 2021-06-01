@@ -8,7 +8,7 @@ const {downloadModel} = require('../utils/downloadModels');
 const {writeFile, readFile} = require('../datahandler/corn');
 const files = require('../datahandler/upload');
 const hostname = process.env.NODE_ENV !== 'production' ?
-    'localhost' : '34.136.47.193';
+    'localhost' : '35.188.36.119';
 let corndata = {
     corn: [],
 };

@@ -4,7 +4,7 @@ const app = express();
 const cors = require('cors');
 const port = 5000;
 const hostname = process.env.NODE_ENV !== 'production' ?
-    'localhost' : '34.136.47.193';
+    'localhost' : '35.188.36.119';
 const indexRouter = require('./routes/index');
 const tomatoRouter = require('./routes/tomatopred');
 const cornRouter = require('./routes/cornpred');

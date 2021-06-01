@@ -1,7 +1,7 @@
 const files = require('../datahandler/upload');
 const path = require('path');
 const hostname = process.env.NODE_ENV !== 'production' ?
-    'localhost' : '34.136.47.193';
+    'localhost' : '35.188.36.119';
 const fs = require('fs');
 const getUploadHandler = (req, res) => {
     try {
