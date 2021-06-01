@@ -12,7 +12,13 @@ let uploadfiles = {
 const getUploadHandler = (req, res) => {
     try {
         uploadfiles = readFile();
-        const files = uploadfiles.files;
+        let files = null;
+        const {model} = req.query;
+        if (model)
+            files = uploadfiles.files.filter((b) => b.model.toLowerCase().indexOf(model.toLowerCase()) !== -1 );
+        else   
+            files = uploadfiles.files;
+            
         return res.status(200).json({
             status: 'success',
             data: {
