@@ -6,7 +6,7 @@ const path = require('path');
 const {getImage} = require('../utils/loadImage');
 const {downloadModel} = require('../utils/downloadModels');
 const {writeFile, readFile} = require('../datahandler/corn');
-const files = require('../datahandler/upload');
+const {readFile: readUploadFile} = require('../datahandler/upload');
 const hostname = process.env.NODE_ENV !== 'production' ?
     'localhost' : '35.188.36.119';
 let corndata = {
@@ -57,7 +57,8 @@ const predictCornHandler = async (req, res) => {
         // error thrower
         if (!img) throw Error('harus menampilkan url gambar!');
         if (!model) throw Error('harus menambahkan nama gambar');
-
+        const uploadfiles = readUploadFile();
+        const files = uploadfiles.files;
         const index = files.filter((n) => n.filename === img)[0];
         // if (index === undefined) throw Error('gambar tidak ditemukan');
 
