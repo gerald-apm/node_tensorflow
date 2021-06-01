@@ -72,10 +72,10 @@ const addFileUploadHandler = (req, res) => {
 };
 
 const deleteFileUploadHandler = (req, res) => {
-    const model = req.query.model;
-    if (!model) { throw Error ('model name required'); }
-    const directory = path.join(__dirname, '..', 'client-img', model);
     try {
+        const model = req.query.model;
+        if (!model) { throw Error ('model name required'); }
+        const directory = path.join(__dirname, '..', 'client-img', model);
         fs.readdir(directory, (err, files) => {
             if (err) throw Error('files entry already cleared');
 
