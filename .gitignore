@@ -16,8 +16,13 @@ credentials
 database
 
 #ai client image
-client-img/*
 !client-img/.gitkeep
+client-img/corn/*
+!client-img/corn/.gitkeep
+client-img/potato/*
+!client-img/potato/.gitkeep
+client-img/tomato/*
+!client-img/tomato/.gitkeep
 
 #python testing
 converter

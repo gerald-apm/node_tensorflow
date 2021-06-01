@@ -38,7 +38,7 @@ const addFileUploadHandler = (req, res) => {
             throw Error(req.rval);
         }
         const {filename, mimetype} = req.file;
-        const {model} = req.query;
+        const model = req.query.model;
         console.log(model);
         if (!model) { throw Error('model not found'); }
         // add new entry
