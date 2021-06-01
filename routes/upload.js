@@ -10,7 +10,7 @@ const {getUploadHandler, addFileUploadHandler,
 
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
-        cb(null, path.join(__dirname, '..', 'client-img'));
+        cb(null, path.join(__dirname, '..', 'client-img', req.query.model));
     },
     filename: (req, file, cb) => {
         const id = nanoid(16);

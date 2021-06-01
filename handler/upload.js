@@ -47,7 +47,7 @@ const addFileUploadHandler = (req, res) => {
             filename: filename,
             mimetype: mimetype,
             model: model,
-            url: 'http://' + hostname + ':5000' + '/download/' + filename,
+            url: 'http://' + hostname + ':5000' + '/download/' + model + filename,
         };
         uploadfiles.files.push(newFile);
         writeFile(uploadfiles);
@@ -56,7 +56,7 @@ const addFileUploadHandler = (req, res) => {
             status: 'success',
             filename: filename,
             model: model,
-            url: 'http://' + hostname + ':5000' + '/download/' + filename,
+            url: 'http://' + hostname + ':5000' + '/download/' + model + filename,
         });
     } catch (e) {
         console.log(e.message);
