@@ -86,8 +86,14 @@ const deleteFileUploadHandler = (req, res) => {
                 });
             }
         });
-        if (uploadfiles.files.length < 1) throw Error('files entry already cleared');
-        uploadfiles.files.splice(0, uploadfiles.files.length);
+        const index = uploadfiles.files.filter((n) => n.model === model)[0];
+        if (index === undefined) throw Error('files entry already cleared');
+        for( let i = 0; i < uploadfiles.files.length; i++){                  
+            if ( uploadfiles.files.length === model) { 
+                uploadfiles.files.splice(i, 1); 
+                i--; 
+            }
+        }
         writeFile(uploadfiles);
 
         return res.status(200).json({
