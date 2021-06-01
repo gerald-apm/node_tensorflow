@@ -1,5 +1,5 @@
 const path = require('path');
-const {readFileUtil, writeFileUtil} = require('..utils/datawrite');
+const {readFileUtil, writeFileUtil} = require('../utils/datawrite');
 const cornfile = path.join(__dirname, '..', 'database', 'corndata.json');
 
 const readFile = () => {
