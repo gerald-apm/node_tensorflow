@@ -51,7 +51,7 @@ const addFileUploadHandler = async (req, res) => {
     try {
         const {filename, mimetype} = req.file;
         const model = req.query.model;
-        let labels = null;
+        let labels = [];
         console.log(model);
         
         if (!model) { throw Error('model is not found'); }
