@@ -1,10 +1,22 @@
 /* eslint-disable max-len */
+const tf = require('@tensorflow/tfjs-node');
 const {writeFile, readFile} = require('../datahandler/upload');
 const path = require('path');
-const hostname = process.env.NODE_ENV !== 'production' ?
-    'localhost' : '35.188.36.119';
+const hostname = require('../utils/localhost');
 const fs = require('fs');
-const { diffieHellman } = require('crypto');
+let modelfile = null;
+
+const labels = [
+    'healthy',
+    'common rust',
+    'northern leaf blight',
+    'cercospora leaf spot',
+];
+
+const argMax = (array) => {
+    return [].reduce.call(array, (m, c, i, arr) => c > arr[m] ? i : m, 0);
+};
+
 let uploadfiles = {
     files: [],
 };
@@ -18,7 +30,7 @@ const getUploadHandler = (req, res) => {
             files = uploadfiles.files.filter((b) => b.model.toLowerCase().indexOf(model.toLowerCase()) !== -1 );
         else   
             files = uploadfiles.files;
-            
+
         return res.status(200).json({
             status: 'success',
             data: {
@@ -38,8 +50,9 @@ const getUploadHandler = (req, res) => {
     });
 };
 
-const addFileUploadHandler = (req, res) => {
+const addFileUploadHandler = async (req, res) => {
     try {
+        if (!modelfile) modelfile = await tf.loadLayersModel('file://' + path.join(__dirname, '..', 'models', 'corn-h5', 'model.json'));
         if (req.rval) {
             throw Error(req.rval);
         }
@@ -47,13 +60,24 @@ const addFileUploadHandler = (req, res) => {
         const model = req.query.model;
         console.log(model);
         if (!model) { throw Error('model not found'); }
+
+        // image prediction goes here
+        const clientimg = await getImage(path.join(__dirname, '..', 'client-img', img));
+
+        console.log(clientimg);
+        // predict image
+        const predictions = await modelfile.predict(clientimg).dataSync();
+        const prediction = Math.max(...predictions);
+        const disease = labels[argMax(predictions)];
+
         // add new entry
-        // TODO: Change localhost with external IP
         const newFile = {
             filename: filename,
             mimetype: mimetype,
             model: model,
             url: 'http://' + hostname + ':5000' + '/download/' + model + '/' + filename,
+            disease: disease,
+            prediction: (prediction*100).toFixed(3),
         };
         uploadfiles.files.push(newFile);
         writeFile(uploadfiles);
@@ -63,6 +87,8 @@ const addFileUploadHandler = (req, res) => {
             filename: filename,
             model: model,
             url: 'http://' + hostname + ':5000' + '/download/' + model + '/' + filename,
+            disease: disease,
+            prediction: (prediction*100).toFixed(3),
         });
     } catch (e) {
         console.log(e.message);
@@ -76,6 +102,66 @@ const addFileUploadHandler = (req, res) => {
         message: 'internal server execption',
     });
 };
+
+const predictCornHandler = async (req, res) => {
+    try {
+        // load model
+        if (!modelfile) modelfile = await tf.loadLayersModel('file://' + path.join(__dirname, '..', 'models', 'corn-h5', 'model.json'));
+        const {model, img} = req.body;
+        // error thrower
+        if (!img) throw Error('harus menampilkan url gambar!');
+        if (!model) throw Error('harus menambahkan nama gambar');
+        const uploadfiles = readUploadFile();
+        const files = uploadfiles.files;
+        const index = files.filter((n) => n.filename === img)[0];
+        if (index === undefined) throw Error('gambar tidak ditemukan');
+
+        // const clientimg = await getImage(path.join(__dirname, '..', 'testing-image', 'testing.jpg'));
+        // fetch from random url
+        const clientimg = await getImage(path.join(__dirname, '..', 'client-img', img));
+
+        console.log(clientimg);
+        // predict image
+        const predictions = await modelfile.predict(clientimg).dataSync();
+        const prediction = Math.max(...predictions);
+        const disease = labels[argMax(predictions)];
+        const url = 'http://' + hostname + ':5000' + '/download/' + model + '/' + img;
+
+        const newCorn = {
+            model: model,
+            imageName: img,
+            imageUrl: url,
+            disease: disease,
+            prediction: prediction.toFixed(3),
+
+        };
+        corndata.corn.push(newCorn);
+        writeFile(corndata);
+        for (let i = 0; i < predictions.length; i++) {
+            const label = labels[i];
+            const probability = predictions[i];
+            console.log(`${label}: ${probability}`);
+        }
+
+        return res.status(200).json({
+            status: 'success',
+            model: model,
+            disease: disease,
+            prediction: `${(prediction * 100).toFixed(3)}%`,
+        });
+    } catch (e) {
+        console.log(e.message);
+        return res.status(400).json({
+            status: 'fail',
+            message: e.message,
+        });
+    }
+    return res.status(500).json({
+        status: 'failed',
+        message: 'internal server execption',
+    });
+};
+
 
 const deleteFileUploadHandler = (req, res) => {
     try {
