@@ -47,7 +47,7 @@ const addFileUploadHandler = (req, res) => {
             filename: filename,
             mimetype: mimetype,
             model: model,
-            url: 'http://' + hostname + ':5000' + '/download/' + model + filename,
+            url: 'http://' + hostname + ':5000' + '/download/' + model + '/' + filename,
         };
         uploadfiles.files.push(newFile);
         writeFile(uploadfiles);
@@ -56,7 +56,7 @@ const addFileUploadHandler = (req, res) => {
             status: 'success',
             filename: filename,
             model: model,
-            url: 'http://' + hostname + ':5000' + '/download/' + model + filename,
+            url: 'http://' + hostname + ':5000' + '/download/' + model + '/' + filename,
         });
     } catch (e) {
         console.log(e.message);
@@ -72,7 +72,8 @@ const addFileUploadHandler = (req, res) => {
 };
 
 const deleteFileUploadHandler = (req, res) => {
-    const directory = path.join(__dirname, '..', 'client-img');
+    const model = req.query.model;
+    const directory = path.join(__dirname, '..', 'client-img', model);
     try {
         fs.readdir(directory, (err, files) => {
             if (err) throw Error('files entry already cleared');
@@ -90,7 +91,7 @@ const deleteFileUploadHandler = (req, res) => {
 
         return res.status(200).json({
             status: 'success',
-            message: 'all data cleared',
+            message: (model + ' data cleared'),
         });
     } catch (e) {
         console.log(e.message);
