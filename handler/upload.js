@@ -63,7 +63,7 @@ const addFileUploadHandler = async (req, res) => {
         if (!model) { throw Error('model not found'); }
 
         // image prediction goes here
-        const clientimg = await getImage(path.join(__dirname, '..', 'client-img', img));
+        const clientimg = await getImage(path.join(__dirname, '..', 'client-img', 'model', filename));
 
         console.log(clientimg);
         // predict image
