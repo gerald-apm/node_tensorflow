@@ -5,14 +5,10 @@ const {writeFile, readFile} = require('../datahandler/upload');
 const path = require('path');
 const hostname = require('../utils/localhost');
 const fs = require('fs');
-let modelfile = null;
 
-const labels = [
-    'healthy',
-    'common rust',
-    'northern leaf blight',
-    'cercospora leaf spot',
-];
+const {labelcorn, labelpotato, labeltomato} = require('../utils/labels')
+
+let modelfile = null;
 
 const argMax = (array) => {
     return [].reduce.call(array, (m, c, i, arr) => c > arr[m] ? i : m, 0);
@@ -53,15 +49,37 @@ const getUploadHandler = (req, res) => {
 
 const addFileUploadHandler = async (req, res) => {
     try {
-        if (!modelfile) modelfile = await tf.loadLayersModel('file://' + path.join(__dirname, '..', 'models', 'corn-h5', 'model.json'));
+        const {filename, mimetype} = req.file;
+        const model = req.query.model;
+        let label = null;
+        console.log(model);
+        
+        if (!model) { throw Error('model is not found'); }
+
+        if (!modelfile) {
+            if (model === 'corn') {
+                // model corn
+                modelfile = await tf.loadLayersModel('file://' + path.join(__dirname, '..', 'models', 'corn-h5', 'model.json'));
+                label = labelcorn;
+            }
+            else if (model === 'potato') {
+                // model potato
+                modelfile = await tf.loadLayersModel('file://' + path.join(__dirname, '..', 'models', 'corn-h5', 'model.json'));
+                label = labelpotato;
+            }
+            else if (model === 'tomato') {
+                 // model potato
+                modelfile = await tf.loadLayersModel('file://' + path.join(__dirname, '..', 'models', 'corn-h5', 'model.json'));
+                label = labeltomato;
+            } else {
+                throw Error('model not found');
+            }
+        }
+                
         if (req.rval) {
             throw Error(req.rval);
         }
-        const {filename, mimetype} = req.file;
-        const model = req.query.model;
-        console.log(model);
-        if (!model) { throw Error('model not found'); }
-
+        
         // image prediction goes here
         const clientimg = await getImage(path.join(__dirname, '..', 'client-img', model, filename));
 
