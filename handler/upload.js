@@ -78,7 +78,7 @@ const deleteFileUploadHandler = (req, res) => {
             }
         });
         if (uploadfiles.files.length < 1) throw Error('files entry already cleared');
-        uploadfiles.files.splice(0, files.length);
+        uploadfiles.files.splice(0, uploadfiles.files.length);
         writeFile(uploadfiles);
 
         return res.status(200).json({

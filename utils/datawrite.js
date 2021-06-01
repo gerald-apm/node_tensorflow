@@ -7,10 +7,10 @@ const readFileUtil = (filepath) => {
         if (!parsedjson) {
             const obj = {};
             writeFileUtil(obj, filepath);
-            console.log('new JSON initialized');
+            // console.log('new JSON initialized');
         }
         console.log('read completed');
-        console.log(parsedjson);
+        // console.log(parsedjson);
         return parsedjson;
     } catch (err) {
         console.log(err);

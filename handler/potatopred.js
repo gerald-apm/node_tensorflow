@@ -1,8 +1,10 @@
+/* eslint-disable prefer-const */
+/* eslint-disable no-unused-vars */
 const tf = require('@tensorflow/tfjs-node');
 const path = require('path');
 const {getImage} = require('../utils/loadImage');
 const {downloadModel} = require('../utils/downloadModels');
-const potato =  require('../datahandler/potato');
+const potato = require('../datahandler/potato');
 let modelfile = null;
 
 const labels = [

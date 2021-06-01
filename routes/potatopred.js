@@ -5,7 +5,7 @@ const router = express.Router();
 
 const {getPotatoHandler,
     predictPotatoHandler,
-    deletePotatoHandler
+    deletePotatoHandler,
 } = require('../handler/potatopred');
 
 router.get('/', getPotatoHandler);

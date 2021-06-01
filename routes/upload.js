@@ -21,9 +21,7 @@ const upload = multer({
     storage: storage,
     fileFilter: (req, file, cb) => {
         const fileext = path.extname(file.originalname);
-        console.log(fileext);
         if (fileext !== '.jpg') {
-            console.log('error1');
             return cb(null, req.rval = 'invalid extensions');
         } else {
             cb(null, true);

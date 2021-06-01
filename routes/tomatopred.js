@@ -5,7 +5,7 @@ const router = express.Router();
 
 const {getTomatoHandler,
     predictTomatoHandler,
-    deleteTomatoHandler
+    deleteTomatoHandler,
 } = require('../handler/tomatopred');
 
 router.get('/', getTomatoHandler);
