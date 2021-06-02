@@ -6,6 +6,7 @@ const path = require('path');
 const hostname = require('../utils/localhost');
 const fs = require('fs');
 let labels = [];
+let predictions = null;
 let cornmodel = null;
 let potatomodel = null;
 let tomatomodel = null;
@@ -66,7 +67,6 @@ const addFileUploadHandler = async (req, res) => {
                 cornmodel = await tf.loadLayersModel('file://' + path.join(__dirname, '..', 'models', 'corn-h5', 'model.json'));
             }
             labels = labelcorn;
-            console.log(model + ' model loaded');
         }
         else if (model === 'potato') {
             // model potato
@@ -74,7 +74,6 @@ const addFileUploadHandler = async (req, res) => {
                 potatomodel = await tf.loadLayersModel('file://' + path.join(__dirname, '..', 'models', 'potato-h5', 'model.json'));
             }
             labels = labelpotato;
-            console.log(model + ' model loaded');
         }
         else if (model === 'tomato') {
             // model potato
@@ -82,15 +81,12 @@ const addFileUploadHandler = async (req, res) => {
                 tomatomodel = await tf.loadLayersModel('file://' + path.join(__dirname, '..', 'models', 'tomato-h5', 'model.json'));
             }
             labels = labeltomato;
-            console.log(model + ' model loaded');
         } else {
             throw Error('model not found');
         }
-        console.log(labels);
         
         // image prediction goes here
         const clientimg = await getImage(path.join(__dirname, '..', 'client-img', model, filename));
-        let predictions = null;
         if (model === 'corn') {
             predictions = await cornmodel.predict(clientimg).dataSync();
         }
@@ -102,6 +98,8 @@ const addFileUploadHandler = async (req, res) => {
         }
         // predict image
         const prediction = Math.max(...predictions);
+        console.log('Hasil prediksi:');
+        console.log(predictions);
         let disease = labels[argMax(predictions)];
         if (!disease) {
             disease = 'undefined';
