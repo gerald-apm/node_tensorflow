@@ -95,10 +95,10 @@ const addFileUploadHandler = async (req, res) => {
             predictions = await cornmodel.predict(clientimg).dataSync();
         }
         else if (model === 'potato') {
-            predictions = await potato.predict(clientimg).dataSync();
+            predictions = await potatomodel.predict(clientimg).dataSync();
         }
         else if (model === 'tomato') {
-            predictions = await tomato.predict(clientimg).dataSync();
+            predictions = await tomatomodel.predict(clientimg).dataSync();
         }
         // predict image
         const prediction = Math.max(...predictions);
