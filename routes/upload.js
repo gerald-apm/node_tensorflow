@@ -11,7 +11,7 @@ const {getUploadHandler, addFileUploadHandler,
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
         if (!req.query.model) {
-            return cb(null, req.rval = 'model name is required');
+            return cb(null, false, req.rval = 'model name is required');
         }
         cb(null, path.join(__dirname, '..', 'client-img', req.query.model));
     },
