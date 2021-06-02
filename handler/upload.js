@@ -52,9 +52,12 @@ const addFileUploadHandler = async (req, res) => {
     try {
         const {filename, mimetype} = req.file;
         const model = req.query.model;
-        console.log(model);
         
         if (!model) { throw Error('model is not found'); }
+
+        if (req.rval) {
+            throw Error(req.rval);
+        }
 
         if (!modelfile) {
             if (model === 'corn') {
@@ -75,15 +78,11 @@ const addFileUploadHandler = async (req, res) => {
                 throw Error('model not found');
             }
         }
-                
-        if (req.rval) {
-            throw Error(req.rval);
-        }
+        console.log(labels);
         
         // image prediction goes here
         const clientimg = await getImage(path.join(__dirname, '..', 'client-img', model, filename));
 
-        console.log(clientimg);
         // predict image
         const predictions = await modelfile.predict(clientimg).dataSync();
         const prediction = Math.max(...predictions);
