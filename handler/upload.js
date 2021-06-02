@@ -88,6 +88,9 @@ const addFileUploadHandler = async (req, res) => {
         const predictions = await modelfile.predict(clientimg).dataSync();
         const prediction = Math.max(...predictions);
         const disease = labels[argMax(predictions)];
+        if (!disease) {
+            disease = 'undefined';
+        }
 
         // add new entry
         const newFile = {
