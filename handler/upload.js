@@ -4,7 +4,6 @@ const {getImage} = require('../utils/loadImage');
 const {writeFile, readFile} = require('../datahandler/upload');
 const path = require('path');
 const hostname = require('../utils/localhost');
-let labels = [];
 const fs = require('fs');
 
 const {labelcorn, labelpotato, labeltomato} = require('../utils/labels')
@@ -58,6 +57,7 @@ const addFileUploadHandler = async (req, res) => {
         if (req.rval) {
             throw Error(req.rval);
         }
+        let labels = [];
 
         if (!modelfile) {
             if (model === 'corn') {
