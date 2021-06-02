@@ -5,10 +5,12 @@ const {writeFile, readFile} = require('../datahandler/upload');
 const path = require('path');
 const hostname = require('../utils/localhost');
 const fs = require('fs');
+let labels = [];
+let cornmodel = null;
+let potatomodel = null;
+let tomatomodel = null;
 
 const {labelcorn, labelpotato, labeltomato} = require('../utils/labels')
-
-let modelfile = null;
 
 const argMax = (array) => {
     return [].reduce.call(array, (m, c, i, arr) => c > arr[m] ? i : m, 0);
@@ -57,37 +59,48 @@ const addFileUploadHandler = async (req, res) => {
         if (req.rval) {
             throw Error(req.rval);
         }
-        let labels = [];
-
-        if (!modelfile) {
-            if (model === 'corn') {
-                // model corn
-                modelfile = await tf.loadLayersModel('file://' + path.join(__dirname, '..', 'models', 'corn-h5', 'model.json'));
-                labels = labelcorn;
-                console.log(model + ' model loaded');
+  
+        if (model === 'corn') {
+            // model corn
+            if (!cornmodel) {
+                cornmodel = await tf.loadLayersModel('file://' + path.join(__dirname, '..', 'models', 'corn-h5', 'model.json'));
             }
-            else if (model === 'potato') {
-                // model potato
-                modelfile = await tf.loadLayersModel('file://' + path.join(__dirname, '..', 'models', 'corn-h5', 'model.json'));
-                labels = labelpotato;
-                console.log(model + ' model loaded');
+            labels = labelcorn;
+            console.log(model + ' model loaded');
+        }
+        else if (model === 'potato') {
+            // model potato
+            if (!potatomodel) {
+                potatomodel = await tf.loadLayersModel('file://' + path.join(__dirname, '..', 'models', 'corn-h5', 'model.json'));
             }
-            else if (model === 'tomato') {
-                 // model potato
-                modelfile = await tf.loadLayersModel('file://' + path.join(__dirname, '..', 'models', 'corn-h5', 'model.json'));
-                labels = labeltomato;
-                console.log(model + ' model loaded');
-            } else {
-                throw Error('model not found');
+            labels = labelpotato;
+            console.log(model + ' model loaded');
+        }
+        else if (model === 'tomato') {
+            // model potato
+            if (!tomatomodel) {
+                tomatomodel = await tf.loadLayersModel('file://' + path.join(__dirname, '..', 'models', 'corn-h5', 'model.json'));
             }
+            labels = labeltomato;
+            console.log(model + ' model loaded');
+        } else {
+            throw Error('model not found');
         }
         console.log(labels);
         
         // image prediction goes here
         const clientimg = await getImage(path.join(__dirname, '..', 'client-img', model, filename));
-
+        let predictions = null;
+        if (model === 'corn') {
+            predictions = await cornmodel.predict(clientimg).dataSync();
+        }
+        else if (model === 'potato') {
+            predictions = await potato.predict(clientimg).dataSync();
+        }
+        else if (model === 'tomato') {
+            predictions = await tomato.predict(clientimg).dataSync();
+        }
         // predict image
-        const predictions = await modelfile.predict(clientimg).dataSync();
         const prediction = Math.max(...predictions);
         let disease = labels[argMax(predictions)];
         if (!disease) {
