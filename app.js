@@ -34,10 +34,10 @@ app.use(cors());
 const httpServer = http.createServer(app);
 const httpsServer = https.createServer(credentials, app);
 
-httpServer.listen(port, () => {
+httpServer.listen(porthttp, () => {
     console.log(`Server berjalan pada host ${hostname} dan port ${port}`);
 });
 
-httpsServer.listen(port, () => {
+httpsServer.listen(porthttps, () => {
     console.log(`Server berjalan pada host ${hostname} dan port ${port}`);
 });
