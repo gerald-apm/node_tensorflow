@@ -1,14 +1,21 @@
 const express = require('express');
 const logger = require('morgan');
+const fs = require('fs');
+const http = require('http');
+const https = require('https');
 const app = express();
 const cors = require('cors');
-const port = 5000;
+const porthttp = 5000;
+const porthttps = 5050;
 const hostname = require('./utils/localhost');
 const indexRouter = require('./routes/index');
 const tomatoRouter = require('./routes/tomatopred');
 const cornRouter = require('./routes/cornpred');
 const potatoRouter = require('./routes/potatopred');
 const uploadRouter = require('./routes/upload');
+const privateKey  = fs.readFileSync('credentials/selfsigned.key', 'utf8');
+const certificate = fs.readFileSync('credentials/selfsigned.crt', 'utf8');
+const credentials = {key: privateKey, cert: certificate};
 
 app.use(logger('dev'));
 app.use(express.json());
@@ -24,6 +31,13 @@ app.use('/upload', express.static('html'));
 
 app.use(cors());
 
-app.listen(port, () => {
+const httpServer = http.createServer(app);
+const httpsServer = https.createServer(credentials, app);
+
+httpServer.listen(port, () => {
+    console.log(`Server berjalan pada host ${hostname} dan port ${port}`);
+});
+
+httpsServer.listen(port, () => {
     console.log(`Server berjalan pada host ${hostname} dan port ${port}`);
 });
