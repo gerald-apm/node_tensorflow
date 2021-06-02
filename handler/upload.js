@@ -4,6 +4,7 @@ const {getImage} = require('../utils/loadImage');
 const {writeFile, readFile} = require('../datahandler/upload');
 const path = require('path');
 const hostname = require('../utils/localhost');
+let labels = [];
 const fs = require('fs');
 
 const {labelcorn, labelpotato, labeltomato} = require('../utils/labels')
@@ -51,7 +52,6 @@ const addFileUploadHandler = async (req, res) => {
     try {
         const {filename, mimetype} = req.file;
         const model = req.query.model;
-        let labels = [];
         console.log(model);
         
         if (!model) { throw Error('model is not found'); }
