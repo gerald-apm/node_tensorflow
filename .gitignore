@@ -13,7 +13,7 @@ credentials
 #models
 
 #saved data
-database
+#database
 
 #ai client image
 !client-img/.gitkeep

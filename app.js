@@ -13,8 +13,10 @@ const tomatoRouter = require('./routes/tomatopred');
 const cornRouter = require('./routes/cornpred');
 const potatoRouter = require('./routes/potatopred');
 const uploadRouter = require('./routes/upload');
-const privateKey  = fs.readFileSync('credentials/selfsigned.key', 'utf8');
-const certificate = fs.readFileSync('credentials/selfsigned.crt', 'utf8');
+// const privateKey  = fs.readFileSync('credentials/selfsigned.key', 'utf8');
+// const certificate = fs.readFileSync('credentials/selfsigned.crt', 'utf8');
+const privateKey = fs.readFileSync('/etc/letsencrypt/live/support.bemcandra.ga/privkey.pem', 'utf8');
+const certificate = fs.readFileSync('/etc/letsencrypt/live/support.bemcandra.ga/fullchain.pem', 'utf8');
 const credentials = {key: privateKey, cert: certificate};
 
 app.use(logger('dev'));
