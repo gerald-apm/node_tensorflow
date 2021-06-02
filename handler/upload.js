@@ -71,7 +71,7 @@ const addFileUploadHandler = async (req, res) => {
         else if (model === 'potato') {
             // model potato
             if (!potatomodel) {
-                potatomodel = await tf.loadLayersModel('file://' + path.join(__dirname, '..', 'models', 'corn-h5', 'model.json'));
+                potatomodel = await tf.loadLayersModel('file://' + path.join(__dirname, '..', 'models', 'potato-h5', 'model.json'));
             }
             labels = labelpotato;
             console.log(model + ' model loaded');
@@ -79,7 +79,7 @@ const addFileUploadHandler = async (req, res) => {
         else if (model === 'tomato') {
             // model potato
             if (!tomatomodel) {
-                tomatomodel = await tf.loadLayersModel('file://' + path.join(__dirname, '..', 'models', 'corn-h5', 'model.json'));
+                tomatomodel = await tf.loadLayersModel('file://' + path.join(__dirname, '..', 'models', 'tomato-h5', 'model.json'));
             }
             labels = labeltomato;
             console.log(model + ' model loaded');
