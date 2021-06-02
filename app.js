@@ -35,9 +35,9 @@ const httpServer = http.createServer(app);
 const httpsServer = https.createServer(credentials, app);
 
 httpServer.listen(porthttp, () => {
-    console.log(`Server berjalan pada host ${hostname} dan port ${port}`);
+    console.log(`Server berjalan pada host ${hostname} dan port ${porthttp}`);
 });
 
 httpsServer.listen(porthttps, () => {
-    console.log(`Server berjalan pada host ${hostname} dan port ${port}`);
+    console.log(`Server berjalan pada host ${hostname} dan port ${porthttps}`);
 });
