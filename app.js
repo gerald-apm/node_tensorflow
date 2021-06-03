@@ -15,8 +15,8 @@ const potatoRouter = require('./routes/potatopred');
 const uploadRouter = require('./routes/upload');
 // const privateKey  = fs.readFileSync('credentials/selfsigned.key', 'utf8');
 // const certificate = fs.readFileSync('credentials/selfsigned.crt', 'utf8');
-const privateKey = fs.readFileSync('credentials/api.easeplantz.ml/privkey.pem', 'utf8');
-const certificate = fs.readFileSync('credentials/api.easeplantz.ml/fullchain.pem', 'utf8');
+const privateKey = fs.readFileSync('credentials/api.easeplantz.ml/privkey1.pem', 'utf8');
+const certificate = fs.readFileSync('credentials/api.easeplantz.ml/fullchain1.pem', 'utf8');
 const credentials = {key: privateKey, cert: certificate};
 
 app.use(logger('dev'));
