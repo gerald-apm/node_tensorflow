@@ -1,4 +1,4 @@
 const hostname = process.env.NODE_ENV !== 'production' ?
-    'localhost' : 'support.bemcandra.ga';
+    'localhost' : 'api.easeplantz.ml';
 
 module.exports = hostname;
