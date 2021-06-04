@@ -33,7 +33,7 @@ const upload = multer({
 });
 
 router.get('/', getUploadHandler);
-router.post('/', upload.single('image'), addFileUploadHandler);
+router.post('/', upload.single('predict-img'), addFileUploadHandler);
 router.delete('/', deleteFileUploadHandler);
 
 module.exports = router;
