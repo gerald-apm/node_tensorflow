@@ -11,7 +11,7 @@ let cornmodel = null;
 let potatomodel = null;
 let tomatomodel = null;
 
-const {labelcorn, labelpotato, labeltomato} = require('../utils/labels')
+const {labelcorn, labelpotato, labeltomato} = require('../utils/labels');
 
 const argMax = (array) => {
     return [].reduce.call(array, (m, c, i, arr) => c > arr[m] ? i : m, 0);
@@ -26,10 +26,11 @@ const getUploadHandler = (req, res) => {
         uploadfiles = readFile();
         let files = null;
         const {model} = req.query;
-        if (model)
+        if (model) {
             files = uploadfiles.files.filter((b) => b.model.toLowerCase().indexOf(model.toLowerCase()) !== -1 );
-        else   
+        } else {
             files = uploadfiles.files;
+        }
 
         return res.status(200).json({
             status: 'success',
@@ -54,28 +55,28 @@ const addFileUploadHandler = async (req, res) => {
     try {
         const {filename, mimetype} = req.file;
         const model = req.query.model;
-        
-        if (!model) { throw Error('model is not found'); }
+
+        if (!model) {
+            throw Error('model is not found');
+        }
 
         if (req.rval) {
             throw Error(req.rval);
         }
-  
+
         if (model === 'corn') {
             // model corn
             if (!cornmodel) {
                 cornmodel = await tf.loadLayersModel('file://' + path.join(__dirname, '..', 'models', 'corn-h5', 'model.json'));
             }
             labels = labelcorn;
-        }
-        else if (model === 'potato') {
+        } else if (model === 'potato') {
             // model potato
             if (!potatomodel) {
                 potatomodel = await tf.loadLayersModel('file://' + path.join(__dirname, '..', 'models', 'potato-h5', 'model.json'));
             }
             labels = labelpotato;
-        }
-        else if (model === 'tomato') {
+        } else if (model === 'tomato') {
             // model potato
             if (!tomatomodel) {
                 tomatomodel = await tf.loadLayersModel('file://' + path.join(__dirname, '..', 'models', 'tomato-h5', 'model.json'));
@@ -84,16 +85,14 @@ const addFileUploadHandler = async (req, res) => {
         } else {
             throw Error('model not found');
         }
-        
+
         // image prediction goes here
         const clientimg = await getImage(path.join(__dirname, '..', 'client-img', model, filename));
         if (model === 'corn') {
             predictions = await cornmodel.predict(clientimg).dataSync();
-        }
-        else if (model === 'potato') {
+        } else if (model === 'potato') {
             predictions = await potatomodel.predict(clientimg).dataSync();
-        }
-        else if (model === 'tomato') {
+        } else if (model === 'tomato') {
             predictions = await tomatomodel.predict(clientimg).dataSync();
         }
         // predict image
@@ -110,7 +109,7 @@ const addFileUploadHandler = async (req, res) => {
             filename: filename,
             mimetype: mimetype,
             model: model,
-            url: 'http://' + hostname + ':5000' + '/download/' + model + '/' + filename,
+            url: 'https://' + hostname + '/download/' + model + '/' + filename,
             disease: disease,
             prediction: (prediction*100).toFixed(3),
         };
@@ -121,7 +120,7 @@ const addFileUploadHandler = async (req, res) => {
             status: 'success',
             filename: filename,
             model: model,
-            url: 'http://' + hostname + ':5000' + '/download/' + model + '/' + filename,
+            url: 'https://' + hostname + '/download/' + model + '/' + filename,
             disease: disease,
             prediction: (prediction*100).toFixed(3),
         });
@@ -142,7 +141,9 @@ const addFileUploadHandler = async (req, res) => {
 const deleteFileUploadHandler = (req, res) => {
     try {
         const model = req.query.model;
-        if (!model) { throw Error ('model name required'); }
+        if (!model) {
+            throw Error('model name required');
+        }
         const directory = path.join(__dirname, '..', 'client-img', model);
         fs.readdir(directory, (err, files) => {
             if (err) throw Error('files entry already cleared');
@@ -156,10 +157,10 @@ const deleteFileUploadHandler = (req, res) => {
         });
         const index = uploadfiles.files.filter((n) => n.model === model)[0];
         if (index === undefined) throw Error('files entry already cleared');
-        for( let i = 0; i < uploadfiles.files.length; i++){                  
-            if ( uploadfiles.files[i].model === model) { 
-                uploadfiles.files.splice(i, 1); 
-                i--; 
+        for ( let i = 0; i < uploadfiles.files.length; i++) {
+            if ( uploadfiles.files[i].model === model) {
+                uploadfiles.files.splice(i, 1);
+                i--;
             }
         }
         console.log('cleared!');
