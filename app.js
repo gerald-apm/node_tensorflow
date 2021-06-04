@@ -14,11 +14,6 @@ const tomatoRouter = require('./routes/tomatopred');
 const cornRouter = require('./routes/cornpred');
 const potatoRouter = require('./routes/potatopred');
 const uploadRouter = require('./routes/upload');
-// const privateKey  = fs.readFileSync('credentials/selfsigned.key', 'utf8');
-// const certificate = fs.readFileSync('credentials/selfsigned.crt', 'utf8');
-// const privateKey = fs.readFileSync('credentials/api.easeplantz.ml/privkey1.pem', 'utf8');
-// const certificate = fs.readFileSync('credentials/api.easeplantz.ml/fullchain1.pem', 'utf8');
-// const credentials = {key: privateKey, cert: certificate};
 
 app.use(logger('dev'));
 app.use(express.json());
@@ -35,12 +30,7 @@ app.use('/upload', express.static('html'));
 app.use(cors());
 
 const httpServer = http.createServer(app);
-// const httpsServer = https.createServer(credentials, app);
 
 httpServer.listen(porthttp, () => {
     console.log(`Server berjalan pada host ${hostname} dan port ${porthttp}`);
 });
-
-/* httpsServer.listen(porthttps, () => {
-    console.log(`Server berjalan pada host ${hostname} dan port ${porthttps}`);
-}); */
