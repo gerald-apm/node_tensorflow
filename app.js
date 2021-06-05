@@ -7,7 +7,6 @@ const https = require('https');
 const app = express();
 const cors = require('cors');
 const porthttp = process.env.PORT_HTTP || 5000;
-const porthttps = process.env.PORT_HTTPS || 5050;
 const hostname = require('./utils/localhost');
 const indexRouter = require('./routes/index');
 const tomatoRouter = require('./routes/tomatopred');
@@ -25,7 +24,6 @@ app.use('/predict/corn', cornRouter);
 app.use('/predict/potato', potatoRouter);
 app.use('/upload', uploadRouter);
 app.use('/download', express.static('client-img'));
-app.use('/upload', express.static('html'));
 
 app.use(cors());
 
