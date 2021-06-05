@@ -1,4 +1,5 @@
+const domain = process.env.DOMAIN || 'api.easeplantz.ml';
 const hostname = process.env.NODE_ENV !== 'production' ?
-    'localhost' : process.env.DOMAIN || 'api.easeplantz.ml';
+    'localhost' : domain;
 
 module.exports = hostname;
