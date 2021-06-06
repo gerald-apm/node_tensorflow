@@ -63,14 +63,14 @@ const predictCornHandler = async (req, res) => {
 
         // const clientimg = await getImage(path.join(__dirname, '..', 'testing-image', 'testing.jpg'));
         // fetch from random url
-        const clientimg = await getImage(path.join(__dirname, '..', 'client-img', img));
+        const clientimg = await getImage(path.join(__dirname, '..', 'client-img', 'corn', img));
 
         console.log(clientimg);
         // predict image
         const predictions = await modelfile.predict(clientimg).dataSync();
         const prediction = Math.max(...predictions);
         const disease = labels[argMax(predictions)];
-        const url = 'http://' + hostname + ':5000' + '/download/' + model + '/' + img;
+        const url = 'http://' + hostname + '/download/' + model + '/' + img;
 
         const newCorn = {
             model: model,
