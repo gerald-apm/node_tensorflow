@@ -1,9 +1,7 @@
 /* eslint-disable max-len */
 const express = require('express');
 const logger = require('morgan');
-const fs = require('fs');
 const http = require('http');
-const https = require('https');
 const app = express();
 const cors = require('cors');
 const porthttp = process.env.PORT_HTTP || 5000;
@@ -14,6 +12,7 @@ const cornRouter = require('./routes/cornpred');
 const potatoRouter = require('./routes/potatopred');
 const uploadRouter = require('./routes/upload');
 
+app.use(cors());
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({extended: false}));
@@ -24,8 +23,6 @@ app.use('/predict/corn', cornRouter);
 app.use('/predict/potato', potatoRouter);
 app.use('/upload', uploadRouter);
 app.use('/download', express.static('client-img'));
-
-app.use(cors());
 
 const httpServer = http.createServer(app);
 
