@@ -1,27 +1,27 @@
 const labelcorn = [
-    'cercospora leaf spot gray leaf spot',
-    'common rust',
-    'northern leaf blight',
-    'healthy',
+    'Corn gray leaf spot',
+    'corn common rust',
+    'corn northern leaf blight',
+    'corn healthy',
 ];
 
 const labelpotato = [  
-    'early blight',
-    'late blight',
-    'healthy',  
+    'Potato Early Blight',
+    'Potato Late Blight',
+    'Potato Healthy',  
 ];
 
 const labeltomato = [
-    'bacterial spot',
-    'early blight',
-    'late blight',
-    'leaf mold',
-    'septoria leaf spot',
-    'spider mites or two-spotted spider mite',
-    'target spot',
-    'tomato yellow leaf curl virus',
-    'tomato mosaic virus',
-    'healthy',
+    'Tomato___Bacterial_spot',
+    'Tomato___Early_blight',
+    'Tomato___Late_blight',
+    'Tomato___Leaf_Mold',
+    'Tomato___Septoria_leaf_spot',
+    'Tomato___Spider_mites Two-spotted_spider_mite',
+    'Tomato___Target_Spot',
+    'Tomato___Tomato_Yellow_Leaf_Curl_Virus',
+    'Tomato___Tomato_mosaic_virus',
+    'Tomato___healthy',
 ];
 
 module.exports = {labelcorn, labelpotato, labeltomato};
