@@ -114,7 +114,7 @@ const addFileUploadHandler = async (req, res) => {
 
     // image prediction goes here
     const clientimg = await getImage(
-      path.join(__dirname, "..", "client-img", model, filename)
+      path.join(__dirname, "..", "..", "client-img", model, filename)
     );
     if (model === "corn") {
       predictions = await cornmodel.predict(clientimg).dataSync();
@@ -171,7 +171,7 @@ const deleteFileUploadHandler = (req, res) => {
     if (!model) {
       throw Error("model name required");
     }
-    const directory = path.join(__dirname, "..", "client-img", model);
+    const directory = path.join(__dirname, "..", "..", "client-img", model);
     fs.readdir(directory, (err, files) => {
       if (err) throw Error("files entry already cleared");
 
