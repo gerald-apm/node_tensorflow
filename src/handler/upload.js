@@ -42,7 +42,7 @@ const getUploadHandler = (req, res) => {
     });
   } catch (e) {
     console.log(e.message);
-    return res.status(400).json({
+    return res.status(404).json({
       status: "fail",
       message: e.message,
     });
