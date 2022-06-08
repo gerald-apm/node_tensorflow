@@ -4,6 +4,7 @@ const { getImage } = require("../utils/loadImage");
 const { writeFile, readFile } = require("../datahandler/upload");
 const path = require("path");
 const hostname = require("../utils/localhost");
+const mongo = require("mongojs");
 const db = mongo("mongodb://34.101.45.187:27017/csr?directConnection=true", [
   "predictions",
 ]);
