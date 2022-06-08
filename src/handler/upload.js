@@ -67,8 +67,8 @@ const getUploadHandler = (req, res) => {
         } else {
           res.json(baseResponse(result));
         }
+      });
     }
-  }
   } catch (e) {
     console.log(e.message);
     return res.status(404).json({
