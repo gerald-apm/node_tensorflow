@@ -50,7 +50,7 @@ const getUploadHandler = (req, res) => {
     // return res.status(200).json(baseResponse(files));
 
     if (model) {
-      let query = { _id: db.ObjectId(req.params.id) };
+      let query = { model };
       db.predictions.find(query, (err, result) => {
         if (err) {
           res.send(err);
