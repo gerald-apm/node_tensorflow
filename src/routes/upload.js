@@ -16,6 +16,7 @@ const storage = multer.diskStorage({
     if (!req.query.model) {
       return cb(null, false, (req.rval = "model name is required"));
     }
+    console.log(path.join(__dirname, "../..", "client-img"));
     cb(null, path.join(__dirname, "../..", "client-img", req.query.model));
   },
   filename: (req, file, cb) => {
@@ -23,6 +24,7 @@ const storage = multer.diskStorage({
     cb(null, id + path.extname(file.originalname));
   },
 });
+
 const upload = multer({
   storage: storage,
   fileFilter: (req, file, cb) => {
