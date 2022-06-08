@@ -4,6 +4,10 @@ const { getImage } = require("../utils/loadImage");
 const { writeFile, readFile } = require("../datahandler/upload");
 const path = require("path");
 const hostname = require("../utils/localhost");
+const db = mongo("mongodb://34.101.45.187:27017/csr?directConnection=true", [
+  "predictions",
+]);
+
 const fs = require("fs");
 let labels = [];
 let predictions = null;
@@ -34,15 +38,37 @@ const getUploadHandler = (req, res) => {
     uploadfiles = readFile();
     let files = null;
     const { model } = req.query;
-    if (model) {
-      files = uploadfiles.files.filter(
-        (b) => b.model.toLowerCase().indexOf(model.toLowerCase()) !== -1
-      );
-    } else {
-      files = uploadfiles.files;
-    }
+    // if (model) {
+    //   files = uploadfiles.files.filter(
+    //     (b) => b.model.toLowerCase().indexOf(model.toLowerCase()) !== -1
+    //   );
+    // } else {
+    //   files = uploadfiles.files;
+    // }
 
-    return res.status(200).json(baseResponse(files));
+    // return res.status(200).json(baseResponse(files));
+
+    if (model) {
+      let query = { _id: db.ObjectId(req.params.id) };
+      db.predictions.find(query, (err, result) => {
+        if (err) {
+          res.send(err);
+          console.log(err);
+        } else {
+          res.json(baseResponse(result));
+        }
+      });
+    } else {
+      let query = {};
+      db.predictions.find(query, (err, result) => {
+        if (err) {
+          res.send(err);
+          console.log(err);
+        } else {
+          res.json(baseResponse(result));
+        }
+    }
+  }
   } catch (e) {
     console.log(e.message);
     return res.status(404).json({
@@ -145,6 +171,15 @@ const addFileUploadHandler = async (req, res) => {
       prediction: (prediction * 100).toFixed(3),
     };
     uploadfiles.files.push(newFile);
+
+    db.predictions.save(newFile, (err, result) => {
+      if (err) {
+        res.send(err);
+      } else {
+        res.json(baseResponse(result));
+      }
+    });
+
     writeFile(uploadfiles);
 
     return res.status(200).json(baseResponse(newFile));
