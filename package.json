@@ -2,7 +2,7 @@
   "name": "node_tensorflow",
   "version": "1.0.0",
   "description": "Testing nodejs with tensorflow ML",
-  "main": "app.js",
+  "main": "./src/app.js",
   "scripts": {
     "start": "NODE_ENV=production npx pm2 start ./src/app.js",
     "test": "node ./src/app.js",
