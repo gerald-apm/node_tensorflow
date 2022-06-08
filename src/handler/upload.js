@@ -228,13 +228,10 @@ const deleteFileUploadHandler = (req, res) => {
     }
 
     let query = { model };
-    db.predictions.deleteMany(query, (err, result) => {
-      if (err) {
-        res.send(err);
-        console.log(err);
-      } else {
-        // res.json(baseResponse(result));
-      }
+    db.predictions.deleteMany(query, function (err, obj) {
+      if (err) throw err;
+      console.log(obj.result.n + " document(s) deleted");
+      db.close();
     });
 
     console.log("cleared!");
