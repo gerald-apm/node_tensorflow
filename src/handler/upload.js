@@ -36,7 +36,7 @@ const baseResponse = (data, status = "success") => {
 
 const getUploadHandler = (req, res) => {
   try {
-    uploadfiles = readFile();
+    // uploadfiles = readFile();
     let files = null;
     const { model } = req.query;
     // if (model) {
@@ -174,7 +174,7 @@ const addFileUploadHandler = async (req, res) => {
       prediction: (prediction * 100).toFixed(3),
     };
     uploadfiles.files.push(newFile);
-    writeFile(uploadfiles);
+    // writeFile(uploadfiles);
 
     db.predictions.save(newFile, (err, result) => {
       if (err) {
@@ -223,8 +223,19 @@ const deleteFileUploadHandler = (req, res) => {
         i--;
       }
     }
+
+    let query = { model };
+    db.predictions.deleteMany(query, (err, result) => {
+      if (err) {
+        res.send(err);
+        console.log(err);
+      } else {
+        // res.json(baseResponse(result));
+      }
+    });
+
     console.log("cleared!");
-    writeFile(uploadfiles);
+    // writeFile(uploadfiles);
 
     return res.status(200).json({
       status: "success",
