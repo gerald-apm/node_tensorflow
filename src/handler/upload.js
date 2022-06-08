@@ -70,6 +70,8 @@ const getUploadHandler = (req, res) => {
         }
       });
     }
+
+    return files;
   } catch (e) {
     console.log(e.message);
     return res.status(404).json({
@@ -172,18 +174,17 @@ const addFileUploadHandler = async (req, res) => {
       prediction: (prediction * 100).toFixed(3),
     };
     uploadfiles.files.push(newFile);
+    writeFile(uploadfiles);
 
     db.predictions.save(newFile, (err, result) => {
       if (err) {
         res.send(err);
       } else {
-        res.json(baseResponse(result));
+        // res.status(201).json(baseResponse(result));
       }
     });
 
-    writeFile(uploadfiles);
-
-    return res.status(200).json(baseResponse(newFile));
+    return res.status(201).json(baseResponse(newFile)); // 201 created
   } catch (e) {
     console.log(e.message);
     return res.status(400).json({
