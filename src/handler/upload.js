@@ -21,6 +21,14 @@ let uploadfiles = {
   files: [],
 };
 
+const baseResponse = (data, status = "success") => {
+  return {
+    status,
+    timestamp: new Date().toISOString(),
+    data,
+  };
+};
+
 const getUploadHandler = (req, res) => {
   try {
     uploadfiles = readFile();
@@ -34,12 +42,7 @@ const getUploadHandler = (req, res) => {
       files = uploadfiles.files;
     }
 
-    return res.status(200).json({
-      status: "success",
-      data: {
-        files,
-      },
-    });
+    return res.status(200).json(baseResponse(files));
   } catch (e) {
     console.log(e.message);
     return res.status(404).json({
@@ -144,14 +147,7 @@ const addFileUploadHandler = async (req, res) => {
     uploadfiles.files.push(newFile);
     writeFile(uploadfiles);
 
-    return res.status(200).json({
-      status: "success",
-      filename: filename,
-      model: model,
-      url: "https://" + hostname + "/download/" + model + "/" + filename,
-      disease: disease,
-      prediction: (prediction * 100).toFixed(3),
-    });
+    return res.status(200).json(baseResponse(newFile));
   } catch (e) {
     console.log(e.message);
     return res.status(400).json({
