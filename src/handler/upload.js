@@ -206,7 +206,10 @@ const deleteFileUploadHandler = (req, res) => {
     }
     const directory = path.join(__dirname, "..", "..", "client-img", model);
     fs.readdir(directory, (err, files) => {
-      if (err) throw Error("files entry already cleared");
+      if (err) {
+        console.log(err);
+        throw Error("files entry already cleared");
+      }
 
       for (const file of files) {
         if (file === ".gitkeep") continue;
