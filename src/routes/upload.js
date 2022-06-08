@@ -1,5 +1,6 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable new-cap */
+/* eslint-disable no-debugger, no-console */
 const express = require("express");
 const router = express.Router();
 const multer = require("multer");
